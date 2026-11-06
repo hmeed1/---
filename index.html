@@ -1,0 +1,2010 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a6192e">
+  <title>مدرسة الهداية الخليفية الثانوية | برنامج كشف الغياب الإلكتروني</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #faf6f4;
+      --surface: #fff;
+      --surface-soft: #f8f1ef;
+      --text: #172033;
+      --muted: #78839a;
+      --line: #eee2df;
+      --primary: #a6192e;
+      --primary-dark: #861329;
+      --primary-soft: #f8e9ec;
+      --gold: #b28a3b;
+      --gold-soft: #f7f0df;
+      --green: #15966a;
+      --green-soft: #e8f7f0;
+      --amber: #bf7a0b;
+      --amber-soft: #fff5df;
+      --red: #d34e5b;
+      --red-soft: #fff0f1;
+      --blue: #3879cf;
+      --blue-soft: #eaf3ff;
+      --shadow: 0 12px 35px rgb(34 48 78 / 5%);
+      --radius: 18px;
+    }
+
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --page: #191416;
+      --surface: #241b1e;
+      --surface-soft: #292022;
+      --text: #eef1fa;
+      --muted: #a0aac0;
+      --line: #443037;
+      --primary: #f07885;
+      --primary-dark: #e45b6c;
+      --primary-soft: #44242d;
+      --gold: #e0bd72;
+      --gold-soft: #403624;
+      --green: #57c99b;
+      --green-soft: #1d3b34;
+      --amber: #f0bc61;
+      --amber-soft: #443821;
+      --red: #ff818c;
+      --red-soft: #452b35;
+      --blue: #83b7ff;
+      --blue-soft: #243650;
+      --shadow: 0 12px 35px rgb(0 0 0 / 16%);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: "Cairo", Tahoma, sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+    .app-shell { width: min(1440px, 100%); margin: 0 auto; padding: 28px 34px 50px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 20px; margin-bottom: 30px; }
+    .brand { display: flex; align-items: center; gap: 13px; }
+    .brand-mark {
+      width: 48px; height: 48px; border-radius: 15px; display: grid; place-items: center;
+      color: #fff; background: linear-gradient(145deg, #c33b4d, #861329); box-shadow: 0 8px 18px rgb(166 25 46 / 24%);
+    }
+    .brand-mark svg { width: 25px; height: 25px; }
+    .brand h1 { font-size: 20px; line-height: 1.3; margin: 0; font-weight: 800; letter-spacing: -.3px; }
+    .brand p { color: var(--muted); font-size: 12px; margin: 3px 0 0; }
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+    .cloud-status { color: var(--muted); font-size: 10px; white-space: nowrap; }
+    .cloud-status[data-state="saved"] { color: var(--green); }
+    .cloud-status[data-state="error"] { color: var(--red); }
+    .public-notice { margin: 0 0 18px; padding: 10px 14px; border: 1px solid var(--amber); border-radius: 12px; background: var(--amber-soft); color: var(--text); font-size: 11px; }
+    .setup-error { width: min(900px, calc(100% - 32px)); margin: 16px auto; padding: 12px 16px; border: 1px solid var(--red); border-radius: 12px; background: var(--red-soft); color: var(--text); font-size: 12px; }
+    .date-pill, .icon-button, .button {
+      border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 12px;
+      min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .date-pill { padding: 0 14px; color: var(--muted); font-size: 12px; }
+    .date-navigation { display: flex; align-items: center; gap: 7px; }
+    .date-navigation[hidden] { display: none; }
+    .date-navigation .icon-button { width: 36px; min-height: 38px; height: 38px; font-size: 20px; }
+    .date-navigation input { width: 145px; height: 38px; padding: 0 9px; font-size: 12px; }
+    .date-navigation .button { min-height: 38px; }
+    .picker-page { width: min(1120px, 100%); margin: 20px auto 40px; padding: 0 10px; }
+    .picker-page[hidden] { display: none; }
+    .home-page { width: min(1000px, 100%); margin: 55px auto 40px; padding: 0 10px; }
+    .home-page[hidden] { display: none; }
+    .home-banner { grid-template-columns: 1fr .8fr; min-height: 340px; }
+    .home-banner .picker-copy h2 { font-size: clamp(28px, 4vw, 40px); margin: 12px 0 9px; }
+    .home-banner .picker-copy p { font-size: 15px; }
+    .home-start { margin-top: 24px; min-width: 150px; min-height: 48px; font-size: 14px; }
+    .home-start svg { width: 18px; height: 18px; }
+    .login-page { width: min(460px, 100%); margin: 55px auto 40px; padding: 0 10px; }
+    .login-page[hidden] { display: none; }
+    .login-card { padding: 28px; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+    .login-card h2 { margin: 0 0 5px; font-size: 22px; text-align: center; }
+    .login-card > p { margin: 0 0 22px; color: var(--muted); font-size: 12px; text-align: center; }
+    .login-form[hidden] { display: none; }
+    .login-field { display: grid; gap: 6px; margin-top: 14px; }
+    .login-field label { color: var(--muted); font-size: 11px; font-weight: 700; }
+    .login-field .field-control { height: 44px; }
+    .login-actions { display: grid; gap: 9px; margin-top: 19px; }
+    .login-actions .button { min-height: 44px; }
+    .login-message { min-height: 20px; margin: 12px 0 0; color: var(--red); font-size: 11px; text-align: center; }
+    .login-message[data-state="success"] { color: var(--green); }
+    .login-back { display: block; margin: 14px auto 0; }
+    .picker-banner {
+      position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 20px; align-items: center;
+      overflow: hidden; min-height: 230px; padding: 28px 34px; border-radius: 24px;
+      color: #fff; background: linear-gradient(120deg, #741126 0%, #a6192e 57%, #c34a53 100%);
+      box-shadow: 0 18px 42px rgb(116 17 38 / 20%);
+    }
+    .picker-banner::before, .picker-banner::after { content: ""; position: absolute; border: 1px solid rgb(255 255 255 / 13%); border-radius: 50%; pointer-events: none; }
+    .picker-banner::before { width: 310px; height: 310px; inset: -165px auto auto -35px; }
+    .picker-banner::after { width: 210px; height: 210px; inset: auto auto -135px 115px; }
+    .picker-copy, .picker-illustration { position: relative; z-index: 1; }
+    .picker-eyebrow { display: inline-flex; align-items: center; gap: 7px; color: #f8e2d0; font-size: 11px; font-weight: 700; }
+    .picker-eyebrow svg { width: 16px; height: 16px; }
+    .picker-copy h2 { margin: 8px 0 5px; font-size: clamp(22px, 3vw, 30px); line-height: 1.35; }
+    .picker-copy p { margin: 0; max-width: 470px; color: #f8e9e4; font-size: 12px; }
+    .picker-illustration { display: flex; justify-content: center; align-items: center; }
+    .picker-illustration svg { width: min(100%, 300px); height: auto; filter: drop-shadow(0 14px 14px rgb(77 12 27 / 22%)); }
+    .picker-illustration svg path:nth-of-type(1) { fill: #fffaf7; }
+    .picker-illustration svg path:nth-of-type(2) { stroke: #f1d2c8; }
+    .picker-illustration svg path:nth-of-type(3) { fill: #f3e4d6; }
+    .picker-illustration svg path:nth-of-type(4) { stroke: #c89086; }
+    .picker-illustration svg rect { fill: #42a875; }
+    .picker-illustration svg path:nth-of-type(6) { fill: #e0bd72; }
+    .picker-form-card {
+      width: min(850px, 95%); position: relative; z-index: 2; margin: -22px auto 0; padding: 22px 24px 20px;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 19px; box-shadow: var(--shadow);
+    }
+    .picker-form-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 15px; }
+    .picker-form-head h3 { margin: 0; font-size: 14px; }
+    .picker-form-head p { margin: 2px 0 0; font-size: 10px; color: var(--muted); }
+    .step-badge { background: var(--gold-soft); color: var(--gold); padding: 5px 10px; border-radius: 99px; font-size: 10px; font-weight: 800; white-space: nowrap; }
+    .picker-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .picker-field { display: grid; gap: 6px; min-width: 0; }
+    .picker-field[hidden] { display: none; }
+    .picker-field label { color: var(--muted); font-size: 10px; font-weight: 700; }
+    .picker-field .field-control { height: 43px; }
+    .picker-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+    .picker-hint { color: var(--muted); font-size: 10px; }
+    .picker-footer .button { min-width: 160px; }
+    .picker-footer .button svg { width: 16px; height: 16px; }
+    .picker-shortcuts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; margin-top: 17px; }
+    .shortcut-card { display: flex; align-items: center; gap: 11px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+    .shortcut-icon { flex: 0 0 auto; display: grid; place-items: center; width: 35px; height: 35px; border-radius: 11px; color: var(--primary); background: var(--primary-soft); }
+    .shortcut-icon svg { width: 17px; height: 17px; }
+    .shortcut-card strong { display: block; font-size: 10px; }
+    .shortcut-card span { display: block; font-size: 9px; color: var(--muted); margin-top: 1px; }
+    .site-credit { position: fixed; left: 20px; bottom: 18px; z-index: 15; }
+    .credit-mark { display: inline-grid; place-items: center; width: 42px; height: 42px; border: 1.5px solid var(--primary); border-radius: 50%; color: var(--primary); background: var(--surface); box-shadow: var(--shadow); font-size: 20px; font-weight: 800; line-height: 1; }
+    .credit-mark:hover { background: var(--primary-soft); }
+    .developer-body { padding: 8px 22px 24px; text-align: center; }
+    .developer-body p { margin: 7px 0; color: var(--muted); }
+    .developer-body strong { color: var(--text); }
+    #dashboard[hidden] { display: none; }
+    .icon-button { width: 42px; padding: 0; }
+    .icon-button svg, .button svg { width: 17px; height: 17px; }
+    .button { padding: 0 15px; font-size: 12px; font-weight: 700; transition: .18s ease; }
+    .button[hidden] { display: none; }
+    .button:hover, .icon-button:hover { border-color: var(--primary); transform: translateY(-1px); }
+    .button.primary { color: #fff; background: var(--primary); border-color: var(--primary); }
+    .button.primary:hover { background: var(--primary-dark); }
+    .button.soft { background: var(--primary-soft); border-color: transparent; color: var(--primary); }
+    .button.danger-soft { background: var(--red-soft); border-color: transparent; color: var(--red); }
+    .welcome { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin: 0 0 22px; }
+    .welcome h2 { font-size: 23px; margin: 0 0 4px; font-weight: 800; }
+    .welcome p { margin: 0; color: var(--muted); font-size: 13px; }
+    .welcome-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin-bottom: 17px; }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px;
+      box-shadow: var(--shadow); min-height: 130px; display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .stat-top { display: flex; align-items: center; justify-content: space-between; }
+    .stat-label { color: var(--muted); font-weight: 600; font-size: 12px; }
+    .stat-icon { height: 37px; width: 37px; display: grid; place-items: center; border-radius: 12px; }
+    .stat-icon svg { width: 19px; height: 19px; }
+    .stat-icon.purple { color: var(--primary); background: var(--primary-soft); }
+    .stat-icon.green { color: var(--green); background: var(--green-soft); }
+    .stat-icon.amber { color: var(--amber); background: var(--amber-soft); }
+    .stat-icon.blue { color: var(--blue); background: var(--blue-soft); }
+    .stat-value { font-size: 28px; line-height: 1.15; font-weight: 800; letter-spacing: -.4px; }
+    .stat-foot { color: var(--muted); font-size: 11px; }
+    .stat-foot strong { color: var(--green); font-weight: 700; }
+    .attendance-card, .students-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .attendance-card { padding: 17px 21px; display: grid; grid-template-columns: minmax(175px, .75fr) 2fr; align-items: center; gap: 24px; margin-bottom: 18px; }
+    .attendance-title { display: flex; align-items: center; gap: 13px; }
+    .attendance-title h3, .card-heading h3 { margin: 0; font-size: 14px; font-weight: 800; }
+    .attendance-title p { margin: 2px 0 0; color: var(--muted); font-size: 11px; }
+    .progress-wrap { display: flex; align-items: center; gap: 13px; }
+    .progress-track { height: 9px; background: var(--surface-soft); border-radius: 99px; overflow: hidden; flex: 1; }
+    .progress-fill { width: 0; height: 100%; background: linear-gradient(90deg, #d35b68, #a6192e); border-radius: inherit; transition: width .3s ease; }
+    .progress-label { min-width: 47px; font-size: 13px; font-weight: 800; color: var(--primary); }
+    .students-card { overflow: hidden; }
+    .card-heading { padding: 20px 21px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .card-heading p { color: var(--muted); font-size: 11px; margin: 3px 0 0; }
+    .heading-actions { display: flex; gap: 9px; }
+    .filters { padding: 0 21px 16px; display: flex; gap: 10px; align-items: center; }
+    .search-wrap { flex: 1; position: relative; }
+    .search-wrap svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); width: 17px; height: 17px; color: var(--muted); pointer-events: none; }
+    .field-control {
+      border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 10px;
+      height: 40px; outline: none; padding: 0 12px; width: 100%; font-size: 12px;
+    }
+    .search-wrap .field-control { padding-right: 38px; }
+    .field-control:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+    .filters select { width: 155px; }
+    #lesson-filter { width: 175px; }
+    .table-scroll { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; min-width: 800px; text-align: right; }
+    .students-table { min-width: 980px; }
+    .students-table th:nth-child(5), .students-table td:nth-child(5) { min-width: 135px; text-align: center; }
+    thead { background: var(--surface-soft); }
+    th { font-size: 11px; color: var(--muted); font-weight: 700; padding: 12px 20px; white-space: nowrap; }
+    td { padding: 12px 20px; border-top: 1px solid var(--line); font-size: 12px; white-space: nowrap; }
+    tbody tr:hover { background: color-mix(in srgb, var(--surface-soft) 65%, transparent); }
+    .student-name { display: flex; align-items: center; gap: 10px; font-weight: 700; }
+    .avatar { width: 35px; height: 35px; border-radius: 11px; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); font-weight: 800; font-size: 12px; flex: 0 0 auto; }
+    .student-sub { color: var(--muted); font-size: 10px; font-weight: 500; display: block; margin-top: 1px; }
+    .status-select { width: 100%; max-width: 108px; height: 32px; border-radius: 9px; font-weight: 700; font-size: 11px; padding: 0 6px; }
+    .status-select.present { color: var(--green); background: var(--green-soft); border-color: transparent; }
+    .status-select.absent { color: var(--red); background: var(--red-soft); border-color: transparent; }
+    .status-select.late { color: var(--amber); background: var(--amber-soft); border-color: transparent; }
+    .status-select.excused { color: var(--blue); background: var(--blue-soft); border-color: transparent; }
+    .row-actions { display: flex; gap: 5px; }
+    .row-action { display: grid; place-items: center; width: 31px; height: 31px; border: 0; background: transparent; border-radius: 8px; color: var(--muted); }
+    .row-action:hover { background: var(--primary-soft); color: var(--primary); }
+    .row-action.delete:hover { background: var(--red-soft); color: var(--red); }
+    .row-action svg { width: 16px; height: 16px; }
+    .table-footer { border-top: 1px solid var(--line); padding: 13px 21px; display: flex; justify-content: space-between; color: var(--muted); font-size: 11px; }
+    .empty-state { text-align: center; padding: 42px 15px; color: var(--muted); font-size: 12px; }
+    .empty-icon { width: 46px; height: 46px; border-radius: 15px; margin: 0 auto 10px; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); }
+    .empty-icon svg { width: 23px; height: 23px; }
+    .toast { position: fixed; bottom: 24px; left: 24px; z-index: 20; background: var(--text); color: var(--surface); padding: 11px 17px; border-radius: 12px; box-shadow: var(--shadow); font-size: 12px; opacity: 0; transform: translateY(10px); pointer-events: none; transition: .2s ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    dialog { width: min(480px, calc(100% - 28px)); border: 1px solid var(--line); padding: 0; border-radius: 18px; color: var(--text); background: var(--surface); box-shadow: 0 25px 90px rgb(0 0 0 / 25%); }
+    dialog::backdrop { background: rgb(16 22 38 / 50%); backdrop-filter: blur(3px); }
+    .dialog-header { padding: 20px 22px 10px; display: flex; align-items: center; justify-content: space-between; }
+    .dialog-header h3 { margin: 0; font-size: 16px; }
+    .dialog-body { padding: 12px 22px 22px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .form-field { display: grid; gap: 6px; }
+    .form-field[hidden] { display: none; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { color: var(--muted); font-size: 11px; font-weight: 700; }
+    .dialog-actions { margin-top: 20px; display: flex; justify-content: flex-start; gap: 9px; }
+    .toast.error { background: var(--red); color: #fff; }
+    #print-report { display: none; }
+    #app-content[hidden] { display: none; }
+    .login-screen {
+      min-height: 100vh; display: grid; place-items: center; padding: 22px;
+      background: radial-gradient(ellipse at 50% 35%, var(--primary-soft), var(--page) 65%);
+    }
+    .login-screen[hidden] { display: none; }
+    .login-card {
+      width: min(410px, 100%); background: var(--surface); border: 1px solid var(--line);
+      border-radius: 22px; padding: 32px; box-shadow: var(--shadow); text-align: center;
+    }
+    .login-card .brand-mark { margin: 0 auto 17px; }
+    .login-card h1 { font-size: 21px; margin: 0 0 5px; }
+    .login-card p { color: var(--muted); font-size: 12px; margin: 0 0 23px; }
+    .login-form { text-align: right; }
+    .login-form label { display: block; color: var(--muted); font-size: 11px; font-weight: 700; margin-bottom: 7px; }
+    .login-form input + label { margin-top: 12px; }
+    .login-form .field-control { height: 45px; }
+    .login-form .button { width: 100%; margin-top: 15px; height: 45px; }
+    .login-error { min-height: 21px; color: var(--red); font-size: 11px; margin: 8px 0 0 !important; }
+    .login-note { margin: 13px 0 0 !important; font-size: 10px !important; }
+    .sheet-header { text-align: center; margin-bottom: 5px; }
+    .sheet-header h1 { margin: 0; font-size: 16px; }
+    .sheet-meta { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px solid #222; padding: 3px 0 6px; margin-bottom: 5px; font-size: 10px; }
+    .sheet-table { width: 100%; min-width: 0; table-layout: fixed; border-collapse: collapse; text-align: center; }
+    .sheet-table th, .sheet-table td { border: 1px solid #333; padding: 2px 3px; color: #172033; white-space: normal; overflow-wrap: break-word; word-break: normal; vertical-align: middle; }
+    .sheet-table th { background: #f0f0f0; font-weight: 700; line-height: 1.15; }
+    .sheet-table td { min-height: 25px; line-height: 1.25; }
+    .sheet-table .sheet-name { text-align: right; }
+    .sheet-note { margin-top: 5px; display: flex; justify-content: space-between; font-size: 9px; }
+    .sheet-scope { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 3px 0 6px; text-align: center; font-size: 10px; font-weight: 700; }
+
+    @media (max-width: 900px) {
+      .app-shell { padding: 22px 20px 38px; }
+      .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .attendance-card { grid-template-columns: 1fr; gap: 12px; }
+    }
+    @media (max-width: 590px) {
+      .app-shell { padding: 18px 13px 30px; }
+      .topbar { align-items: flex-start; margin-bottom: 22px; }
+      .top-actions { width: 100%; flex-wrap: wrap; }
+      .cloud-status { margin-inline-start: auto; }
+      .brand-mark { width: 42px; height: 42px; }
+      .date-navigation { gap: 4px; }
+      .date-navigation input { width: 128px; }
+      .date-navigation .today-label { display: none; }
+      .welcome { align-items: flex-start; flex-direction: column; }
+      .welcome h2 { font-size: 20px; }
+      .stats-grid { gap: 10px; }
+      .stat-card { min-height: 117px; padding: 14px; }
+      .stat-value { font-size: 24px; }
+      .stat-label { font-size: 11px; }
+      .card-heading { align-items: flex-start; flex-direction: column; padding: 17px 15px 13px; }
+      .heading-actions { width: 100%; }
+      .heading-actions .button { flex: 1; }
+      .filters { padding: 0 15px 13px; flex-wrap: wrap; }
+      .search-wrap { flex-basis: 100%; }
+      .filters select { flex: 1; width: auto; }
+      th, td { padding-left: 13px; padding-right: 13px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-field.full { grid-column: auto; }
+      .picker-page { margin-top: 10px; padding: 0; }
+      .home-page { margin: 30px auto; padding: 0; }
+      .home-banner { grid-template-columns: 1fr; min-height: auto; padding: 28px 20px; }
+      .home-banner .picker-illustration { justify-content: center; }
+      .home-banner .picker-illustration svg { width: 170px; max-height: 130px; }
+      .login-page { margin: 30px auto; padding: 0; }
+      .login-card { padding: 22px 18px; }
+      .picker-banner { grid-template-columns: 1fr; min-height: auto; padding: 23px 20px 10px; }
+      .picker-illustration { justify-content: flex-start; }
+      .picker-illustration svg { width: 160px; max-height: 110px; }
+      .picker-form-card { width: calc(100% - 18px); padding: 17px 15px; margin-top: -6px; }
+      .picker-fields { grid-template-columns: 1fr 1fr; }
+      .picker-shortcuts { grid-template-columns: 1fr; gap: 8px; }
+      .picker-footer { align-items: stretch; flex-direction: column; }
+      .picker-footer .button { width: 100%; }
+      .site-credit { left: 13px; bottom: 13px; }
+    }
+    @media print {
+      @page { size: A4 portrait; margin: 7mm; }
+      html, body { width: 100%; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #172033 !important; font-family: Tahoma, Arial, sans-serif; }
+      .app-shell, .toast, dialog, #login-screen { display: none !important; }
+      #print-report { display: block !important; width: 100%; direction: rtl; color: #172033; }
+      .sheet-header { margin-bottom: 2mm; }
+      .sheet-header h1 { font-size: 13pt; }
+      .sheet-meta { font-size: 8pt; padding: 1mm 0; margin-bottom: 1mm; }
+      .sheet-scope { margin: 1mm 0 2mm; font-size: 8pt; }
+      .sheet-table { font-size: 7.5pt; }
+      .sheet-table th, .sheet-table td { border: 1px solid #222 !important; padding: 1mm !important; white-space: normal !important; overflow-wrap: break-word; word-break: normal; }
+      .sheet-table th { font-size: 7pt; line-height: 1.15; }
+      .sheet-table td { height: 6mm; line-height: 1.2; }
+      .sheet-table th { background: #e8e8e8 !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .sheet-footer { margin-top: 2mm; font-size: 8pt; }
+      .sheet-table thead { display: table-header-group; }
+      .sheet-table tr { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="setup-error" id="setup-error" role="alert" hidden></div>
+  <div id="app-content">
+  <main class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3h8M9 3v3h6V3M5 6h14v15H5z"/><path d="m8 13 2.5 2.5L16 10"/></svg>
+        </div>
+        <div><h1>مدرسة الهداية الخليفية الثانوية</h1><p>برنامج كشف الغياب الإلكتروني</p></div>
+      </div>
+      <div class="top-actions">
+        <span class="cloud-status" id="cloud-status" role="status" aria-live="polite"></span>
+        <button class="button" id="language-toggle" type="button" aria-label="تغيير اللغة">English</button>
+        <button class="button soft" id="change-roster" type="button" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16M4 12h16M4 19h16"/><circle cx="8" cy="5" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="10" cy="19" r="2" fill="currentColor"/></svg>
+          تغيير الكشف
+        </button>
+        <button class="button" id="sign-out" type="button" hidden>تسجيل الخروج</button>
+        <div class="date-navigation" id="date-navigation" aria-label="اختيار تاريخ الحضور" hidden>
+          <button class="icon-button" id="prev-date" type="button" aria-label="اليوم السابق" title="اليوم السابق">‹</button>
+          <input class="field-control" id="attendance-date" type="date" aria-label="تاريخ الحضور">
+          <button class="icon-button" id="next-date" type="button" aria-label="اليوم التالي" title="اليوم التالي">›</button>
+          <button class="button" id="today-button" type="button">اليوم</button>
+          <span class="date-pill today-label" id="today-label"></span>
+        </div>
+        <button class="icon-button" id="theme-toggle" type="button" aria-label="تبديل الوضع" title="تبديل الوضع">
+          <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="home-page" id="home-screen" aria-labelledby="home-title">
+      <div class="picker-banner home-banner">
+        <div class="picker-copy">
+          <span class="picker-eyebrow">مدرسة الهداية الخليفية الثانوية للبنين · برنامج كشف الغياب الإلكتروني</span>
+          <h2 id="home-title">مرحبًا بك في برنامج كشف الغياب الإلكتروني</h2>
+          <p>سجّل حضور الطلاب بسهولة، واستعرض كشوف الصفوف.</p>
+          <button class="button primary home-start" id="start-button" type="button">
+            بدء
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        </div>
+        <div class="picker-illustration" aria-hidden="true">
+          <svg viewBox="0 0 320 210" fill="none">
+            <circle cx="160" cy="106" r="87" fill="white" fill-opacity=".12"/>
+            <circle cx="160" cy="106" r="67" fill="white" fill-opacity=".12"/>
+            <path d="M82 61c0-7 6-13 13-13h132c7 0 13 6 13 13v108H95c-7 0-13-6-13-13V61Z" fill="#F9F8FF"/>
+            <path d="M95 48h133c7 0 12 6 12 13v108H95c-7 0-13-6-13-13V61c0-7 6-13 13-13Z" stroke="#D7D3FF" stroke-width="3"/>
+            <path d="M155 48h15v121h-15z" fill="#E8E6FF"/>
+            <path d="M107 74h36m-36 17h36m-36 17h30m48-34h36m-36 17h36m-36 17h29" stroke="#B7B2F6" stroke-width="5" stroke-linecap="round"/>
+            <rect x="177" y="126" width="57" height="48" rx="8" fill="#42C89A"/>
+            <path d="m190 149 9 9 21-23" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-page" id="login-screen" aria-labelledby="login-title" hidden>
+      <div class="login-card">
+        <h2 id="login-title">تسجيل الدخول</h2>
+        <p id="login-description">أدخل الرقم الأكاديمي وكلمة المرور للوصول إلى الكشف.</p>
+        <form class="login-form" id="login-form">
+          <div class="login-field">
+            <label for="login-identifier">الرقم الأكاديمي أو بريد الموظف</label>
+            <input class="field-control" id="login-identifier" required autocomplete="username" maxlength="120">
+          </div>
+          <div class="login-field">
+            <label for="login-password">كلمة المرور</label>
+            <input class="field-control" id="login-password" type="password" required autocomplete="current-password" minlength="10">
+          </div>
+          <div class="login-actions">
+            <button class="button primary" id="login-submit" type="submit">دخول</button>
+            <button class="button" id="show-registration" type="button">إنشاء حساب طالب</button>
+          </div>
+        </form>
+        <form class="login-form" id="registration-form" hidden>
+          <div class="login-field">
+            <label for="registration-academic">الرقم الأكاديمي</label>
+            <input class="field-control" id="registration-academic" required autocomplete="username" inputmode="numeric" maxlength="30">
+          </div>
+          <div class="login-field">
+            <label for="registration-password">كلمة المرور (10 أحرف على الأقل)</label>
+            <input class="field-control" id="registration-password" type="password" required autocomplete="new-password" minlength="10">
+          </div>
+          <div class="login-field">
+            <label for="registration-password-confirm">تأكيد كلمة المرور</label>
+            <input class="field-control" id="registration-password-confirm" type="password" required autocomplete="new-password" minlength="10">
+          </div>
+          <div class="login-actions">
+            <button class="button primary" type="submit">إرسال طلب التسجيل</button>
+            <button class="button" id="show-login" type="button">العودة لتسجيل الدخول</button>
+          </div>
+        </form>
+        <p class="login-message" id="login-message" role="status" aria-live="polite"></p>
+        <button class="button login-back" id="login-back-home" type="button">عودة</button>
+      </div>
+    </section>
+
+    <section class="picker-page" id="roster-picker" aria-labelledby="picker-title" hidden>
+      <div class="picker-banner">
+        <div class="picker-copy">
+          <span class="picker-eyebrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M8 7h8m-8 4h7"/></svg>
+            مدرسة الهداية الخليفية الثانوية للبنين · بوابة الكشوف الدراسية
+          </span>
+          <h2 id="picker-title">اختر كشفك وابدأ يومك بثقة</h2>
+          <p>حدد الصف والمسار والفصل، ثم اختر تاريخ وحصة التسجيل. سيظهر لك الكشف المطلوب فقط لتبدأ التحضير بسهولة.</p>
+        </div>
+        <div class="picker-illustration" aria-hidden="true">
+          <svg viewBox="0 0 320 210" fill="none">
+            <circle cx="160" cy="106" r="87" fill="white" fill-opacity=".12"/>
+            <circle cx="160" cy="106" r="67" fill="white" fill-opacity=".12"/>
+            <path d="M82 61c0-7 6-13 13-13h132c7 0 13 6 13 13v108H95c-7 0-13 6-13-13V61Z" fill="#F9F8FF"/>
+            <path d="M95 48h133c7 0 12 6 12 13v108H95c-7 0-13-6-13-13V61c0-7 6-13 13-13Z" stroke="#D7D3FF" stroke-width="3"/>
+            <path d="M155 48h15v121h-15z" fill="#E8E6FF"/>
+            <path d="M107 74h36m-36 17h36m-36 17h30m48-34h36m-36 17h36m-36 17h29" stroke="#B7B2F6" stroke-width="5" stroke-linecap="round"/>
+            <rect x="177" y="126" width="57" height="48" rx="8" fill="#42C89A"/>
+            <path d="m190 149 9 9 21-23" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M83 47c-6-13-1-24 11-27 4 14 0 23-11 27Zm151-4c7-13 18-16 27-8-8 13-17 16-27 8Z" fill="#FFC978"/>
+            <path d="M72 169h175" stroke="white" stroke-opacity=".7" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <form class="picker-form-card" id="roster-picker-form">
+        <div class="picker-form-head">
+          <div><h3>إعدادات الكشف</h3><p>اختر بيانات الكشف الذي تريد الوصول إليه</p></div>
+          <span class="step-badge">خطوة واحدة للبدء</span>
+        </div>
+        <div class="picker-fields">
+          <div class="picker-field">
+            <label for="picker-grade">الصف الدراسي</label>
+            <select class="field-control" id="picker-grade" required>
+              <option value="">اختر الصف الدراسي</option><option value="all">جميع الصفوف</option><option value="first">أول ثانوي</option><option value="second">ثاني ثانوي</option><option value="third">ثالث ثانوي</option>
+            </select>
+          </div>
+          <div class="picker-field" id="picker-track-field" hidden>
+            <label for="picker-track" id="picker-track-label">المسار / الوحدة</label>
+            <select class="field-control" id="picker-track"></select>
+          </div>
+          <div class="picker-field" id="picker-unit-field" hidden>
+            <label for="picker-unit">التخصص العلمي</label>
+            <select class="field-control" id="picker-unit"></select>
+          </div>
+          <div class="picker-field">
+            <label for="picker-date">تاريخ الكشف</label>
+            <input class="field-control" id="picker-date" type="date" required>
+          </div>
+          <div class="picker-field">
+            <label for="picker-lesson">الحصة</label>
+            <select class="field-control" id="picker-lesson">
+              <option value="0">الحصة الأولى</option><option value="1">الحصة الثانية</option><option value="2">الحصة الثالثة</option><option value="3">الحصة الرابعة</option><option value="4">الحصة الخامسة</option><option value="5">الحصة السادسة</option><option value="6">الحصة السابعة</option>
+            </select>
+          </div>
+        </div>
+        <div class="picker-footer">
+          <button class="button" id="back-home" type="button">عودة</button>
+          <span class="picker-hint">اختر بيانات الكشف الذي تريد عرضه.</span>
+          <button class="button primary" id="open-roster" type="submit">
+            عرض الكشف
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </form>
+      <div class="picker-shortcuts" aria-label="مميزات النظام">
+        <div class="shortcut-card"><span class="shortcut-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><strong>سجل لكل يوم</strong><span>تنقل بين التواريخ واستعد تسجيلاتك</span></div></div>
+        <div class="shortcut-card"><span class="shortcut-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v16H4z"/><path d="M8 8h8m-8 4h8m-8 4h5"/></svg></span><div><strong>كشف جاهز للطباعة</strong><span>تنسيق واضح للحصص السبع والطلاب</span></div></div>
+        <div class="shortcut-card"><span class="shortcut-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v4h14v-4"/></svg></span><div><strong>تصدير سريع</strong><span>احفظ الكشف وشاركه بصيغة Excel</span></div></div>
+      </div>
+    </section>
+
+    <div id="dashboard" hidden>
+    <section class="welcome">
+      <div><h2>صباح الخير 👋</h2><p>إليك ملخص الحضور اليومي، يمكنك إدارة طلابك من مكان واحد.</p></div>
+      <div class="welcome-actions">
+        <button class="button" id="seed-button" type="button" title="استعادة قائمة الطلاب من كشف الغياب">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 2.64-6.36L3 8"/><path d="M3 3v5h5m4-1v5l3 2"/></svg>
+          استعادة كشف الطلاب
+        </button>
+        <button class="button primary" id="add-student" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          إضافة طالب
+        </button>
+      </div>
+    </section>
+
+    <section class="stats-grid" aria-label="إحصائيات الحضور">
+      <article class="stat-card">
+        <div class="stat-top"><span class="stat-label">إجمالي الطلاب</span><span class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m7-10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></span></div>
+        <div class="stat-value" id="total-count">٠</div><div class="stat-foot">طالب مسجل في النظام</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span class="stat-label">حاضرون في الحصة المحددة</span><span class="stat-icon green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg></span></div>
+        <div class="stat-value" id="present-count">٠</div><div class="stat-foot"><strong id="present-percent">٠٪</strong> من إجمالي الطلاب</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span class="stat-label">غائبون في الحصة المحددة</span><span class="stat-icon amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></span></div>
+        <div class="stat-value" id="absent-count">٠</div><div class="stat-foot">يشمل حالات الغياب المسجلة</div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span class="stat-label">متأخرون / بعذر في الحصة</span><span class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span></div>
+        <div class="stat-value" id="other-count">٠</div><div class="stat-foot">تأخر أو غياب بعذر</div>
+      </article>
+    </section>
+
+    <section class="attendance-card" aria-label="نسبة الحضور">
+      <div class="attendance-title">
+        <span class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5m0 14h16"/><path d="m7 15 4-4 3 2 5-6"/></svg></span>
+        <div><h3>نسبة الحضور في الحصة المحددة</h3><p id="attendance-detail">لم يتم تسجيل حضور بعد</p></div>
+      </div>
+      <div class="progress-wrap"><div class="progress-track" role="progressbar" aria-label="نسبة الحضور" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div><span class="progress-label" id="progress-label">٠٪</span></div>
+    </section>
+
+    <section class="students-card">
+      <div class="card-heading">
+        <div><h3>قائمة الطلاب</h3><p id="current-roster-summary">إدارة بيانات الطلاب وتسجيل الحضور اليومي</p></div>
+        <div class="heading-actions">
+          <button class="button soft" id="mark-all" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 4 4L19 6"/></svg>
+            تحضير الجميع للحصة المحددة
+          </button>
+          <button class="button" id="print-button" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+            طباعة التقرير
+          </button>
+          <button class="button" id="export-button" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4m4-5 5 5 5-5m-5 5V3"/></svg>
+            تصدير Excel
+          </button>
+        </div>
+      </div>
+      <div class="filters">
+        <label class="search-wrap" id="search-filter-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input class="field-control" id="search-input" type="search" placeholder="ابحث بالاسم أو الرقم الأكاديمي..." aria-label="بحث عن طالب">
+        </label>
+        <select class="field-control" id="class-filter" aria-label="فلترة حسب الصف أو الفصل"><option value="">كل الفصول</option></select>
+        <select class="field-control" id="lesson-filter" aria-label="الحصة المعروضة في الإحصائيات والفلترة">
+          <option value="0">الحصة الأولى</option><option value="1">الحصة الثانية</option><option value="2">الحصة الثالثة</option><option value="3">الحصة الرابعة</option><option value="4">الحصة الخامسة</option><option value="5">الحصة السادسة</option><option value="6">الحصة السابعة</option>
+        </select>
+        <select class="field-control" id="status-filter" aria-label="فلترة حسب حالة الحضور">
+          <option value="">كل الحالات</option><option value="present">حاضر</option><option value="absent">غائب</option><option value="late">متأخر</option><option value="excused">بعذر</option><option value="unmarked">غير مسجل</option>
+        </select>
+      </div>
+      <div class="table-scroll">
+        <table class="students-table">
+          <thead><tr><th>الطالب</th><th>الرقم التسلسلي</th><th>الرقم الأكاديمي</th><th>الصف / الفصل</th><th id="selected-lesson-heading">الحصة الأولى</th><th>إجراءات</th></tr></thead>
+          <tbody id="student-rows"></tbody>
+        </table>
+      </div>
+      <div class="table-footer"><span id="results-label">لا يوجد طلاب</span><span>يتم حفظ التغييرات تلقائيًا</span></div>
+    </section>
+    </div>
+    <footer class="site-credit">
+      <button class="credit-mark" id="developer-info-button" type="button" title="معلومات عن البرنامج" aria-label="معلومات عن البرنامج">?</button>
+    </footer>
+  </main>
+
+  <section id="print-report" aria-hidden="true"></section>
+  <dialog id="student-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-header"><h3 id="dialog-title">إضافة طالب جديد</h3><button class="icon-button" id="close-dialog" type="button" aria-label="إغلاق">×</button></div>
+    <form class="dialog-body" id="student-form">
+      <input type="hidden" id="student-id">
+      <div class="form-grid">
+        <div class="form-field full"><label for="full-name">الاسم الكامل *</label><input class="field-control" id="full-name" name="name" required maxlength="100" autocomplete="name" placeholder="مثال: محمد"></div>
+        <div class="form-field"><label for="serial-number">الرقم التسلسلي *</label><input class="field-control" id="serial-number" name="serial" required maxlength="30" placeholder="مثال: ١٠٢٤"></div>
+        <div class="form-field"><label for="academic-number">الرقم الأكاديمي *</label><input class="field-control" id="academic-number" name="academic" required maxlength="30" placeholder="مثال: ٤٤١٠٠٢٣"></div>
+        <div class="form-field full"><label for="student-grade">الصف الدراسي *</label>
+          <select class="field-control" id="student-grade" required>
+            <option value="">اختر الصف الدراسي</option><option value="first">أول ثانوي</option><option value="second">ثاني ثانوي</option><option value="third">ثالث ثانوي</option>
+          </select>
+        </div>
+        <div class="form-field full" id="student-track-field" hidden><label for="student-track" id="student-track-label">المسار *</label>
+          <select class="field-control" id="student-track"></select>
+        </div>
+        <div class="form-field full" id="student-unit-field" hidden><label for="student-unit" id="student-unit-label">الوحدة / التخصص *</label>
+          <select class="field-control" id="student-unit"></select>
+        </div>
+      </div>
+      <div class="dialog-actions"><button class="button primary" type="submit">حفظ البيانات</button><button class="button" id="cancel-dialog" type="button">إلغاء</button></div>
+    </form>
+  </dialog>
+  <dialog id="developer-dialog" aria-labelledby="developer-dialog-title">
+    <div class="dialog-header"><h3 id="developer-dialog-title">عن البرنامج</h3><button class="icon-button" id="close-developer-dialog" type="button" aria-label="إغلاق">×</button></div>
+    <div class="developer-body">
+      <p>تم إنشاء هذا الموقع بواسطة:</p>
+      <p><strong>عبدالحميد محمد علي الحمري</strong></p>
+      <p>الرقم الأكاديمي: <strong>20260017</strong></p>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script>
+    (() => {
+      "use strict";
+      const config = window.ATTENDANCE_SUPABASE;
+      const setupError = document.querySelector("#setup-error");
+      window.hudurReady = (() => {
+        if (!config || !config.url || !config.anonKey || config.url.includes("YOUR_PROJECT")
+          || config.anonKey.includes("YOUR_SUPABASE")) {
+          setupError.hidden = false;
+          setupError.textContent = "أكمل إعداد عنوان Supabase ومفتاح النشر في supabase-config.js أولًا.";
+          return Promise.resolve(false);
+        }
+        if (!window.supabase?.createClient) {
+          setupError.hidden = false;
+          setupError.textContent = "تعذر تحميل خدمة قاعدة البيانات. تحقق من اتصال الإنترنت ثم أعد المحاولة.";
+          return Promise.resolve(false);
+        }
+        window.hudurClient = window.supabase.createClient(config.url, config.anonKey, {
+          auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+        });
+        return Promise.resolve(true);
+      })();
+    })();
+  </script>
+  <script>
+    (async () => {
+      "use strict";
+      const databaseReady = await window.hudurReady;
+      const THEME_KEY = "hudur.theme.v1";
+      const LANGUAGE_KEY = "hudur.language.v1";
+      const translations = {
+        "مدرسة الهداية الخليفية الثانوية للبنين": "Al-Hidaya Al-Khalifia Secondary School for Boys",
+        "مدرسة الهداية الخليفية الثانوية": "Al-Hidaya Al-Khalifia Secondary School",
+        "برنامج كشف الغياب الإلكتروني": "Electronic Absence Tracking System",
+        "بوابة الكشوف الدراسية": "Academic records portal",
+        "حضور": "Attendance",
+        "إدارة الحضور والطلاب": "Attendance and student management",
+        "مميزات النظام": "System features",
+        "تغيير الكشف": "Change roster",
+        "بدء": "Start",
+        "مرحبًا بك في برنامج كشف الغياب الإلكتروني": "Welcome to the Electronic Absence Tracking System",
+        "سجّل حضور الطلاب بسهولة، واستعرض كشوف الصفوف.": "Easily record student attendance and view grade rosters.",
+        "عودة": "Back",
+        "تسجيل الدخول": "Sign in",
+        "أدخل الرقم الأكاديمي وكلمة المرور للوصول إلى الكشف.": "Enter your academic number and password to access your roster.",
+        "الرقم الأكاديمي أو بريد الموظف": "Academic number or staff email",
+        "كلمة المرور": "Password",
+        "دخول": "Sign in",
+        "إنشاء حساب طالب": "Create student account",
+        "الرقم الأكاديمي": "Academic number",
+        "كلمة المرور (10 أحرف على الأقل)": "Password (at least 10 characters)",
+        "تأكيد كلمة المرور": "Confirm password",
+        "إرسال طلب التسجيل": "Submit registration request",
+        "العودة لتسجيل الدخول": "Back to sign in",
+        "تسجيل الخروج": "Sign out",
+        "تم استلام طلب التسجيل. سيُتاح الدخول بعد موافقة إدارة المدرسة.": "Registration request received. Access will be available after school staff approval.",
+        "تم إنشاء الحساب، لكن يلزم تعطيل تأكيد البريد في Supabase. تواصل مع إدارة المدرسة لإكمال التفعيل.": "Account created, but email confirmation must be disabled in Supabase. Contact school staff to complete activation.",
+        "بيانات الدخول غير صحيحة أو الحساب غير مفعل.": "Invalid credentials or inactive account.",
+        "أدخل رقماً أكاديمياً صحيحاً وكلمة مرور من 10 أحرف على الأقل.": "Enter a valid academic number and a password of at least 10 characters.",
+        "كلمتا المرور غير متطابقتين.": "The passwords do not match.",
+        "تعذر الاتصال بخدمة تسجيل الدخول. تحقق من إعداد Supabase ثم أعد المحاولة.": "Could not connect to sign-in. Check Supabase configuration and try again.",
+        "لا يوجد سجل طالب مرتبط بهذا الحساب. راجع إدارة المدرسة.": "No student record is linked to this account. Contact school staff.",
+        "ينتظر الحساب موافقة إدارة المدرسة.": "Your account is awaiting school staff approval.",
+        "الحساب غير مفعل أو لا يملك صلاحية مناسبة.": "This account is inactive or does not have the required access.",
+        "تاريخ الحضور": "Attendance date",
+        "اليوم السابق": "Previous day",
+        "اليوم التالي": "Next day",
+        "اختيار تاريخ الحضور": "Select attendance date",
+        "اليوم": "Today",
+        "تبديل الوضع": "Toggle theme",
+        "اختر كشفك وابدأ يومك بثقة": "Choose your roster and start your day with confidence",
+        "حدد الصف والمسار والفصل، ثم اختر تاريخ وحصة التسجيل. سيظهر لك الكشف المطلوب فقط لتبدأ التحضير بسهولة.": "Choose a grade, track, and class, then select the date and lesson. The requested roster will appear so you can easily record attendance.",
+        "إعدادات الكشف": "Roster settings",
+        "اختر بيانات الكشف الذي تريد الوصول إليه": "Choose the roster you want to open",
+        "خطوة واحدة للبدء": "One step to get started",
+        "الصف الدراسي": "Grade",
+        "اختر الصف الدراسي": "Select a grade",
+        "جميع الصفوف": "All grades",
+        "أول ثانوي": "First secondary",
+        "ثاني ثانوي": "Second secondary",
+        "ثالث ثانوي": "Third secondary",
+        "المسار / الوحدة": "Track / unit",
+        "التخصص العلمي": "Science specialization",
+        "تاريخ الكشف": "Roster date",
+        "الحصة": "Lesson",
+        "لا يوجد طلاب في الكشف الحالي لتسجيل حضورهم.": "There are no students in the current roster to mark present.",
+        "الحصة الأولى": "Lesson 1",
+        "الحصة الثانية": "Lesson 2",
+        "الحصة الثالثة": "Lesson 3",
+        "الحصة الرابعة": "Lesson 4",
+        "الحصة الخامسة": "Lesson 5",
+        "الحصة السادسة": "Lesson 6",
+        "الحصة السابعة": "Lesson 7",
+        "يمكنك تغيير هذه الاختيارات لاحقًا من زر «تغيير الكشف».": "You can change these selections later using “Change roster”.",
+        "عرض الكشف": "Open roster",
+        "سجل لكل يوم": "A record for every day",
+        "تنقل بين التواريخ واستعد تسجيلاتك": "Browse dates and review your records",
+        "كشف جاهز للطباعة": "Print-ready roster",
+        "تنسيق واضح للحصص السبع والطلاب": "A clear layout for students and all seven lessons",
+        "تصدير سريع": "Quick export",
+        "احفظ الكشف وشاركه بصيغة Excel": "Save and share the roster as an Excel file",
+        "صباح الخير 👋": "Good morning 👋",
+        "إليك ملخص الحضور اليومي، يمكنك إدارة طلابك من مكان واحد.": "Here is your daily attendance summary. Manage your students in one place.",
+        "استعادة كشف الطلاب": "Restore student roster",
+        "إضافة طالب": "Add student",
+        "إجمالي الطلاب": "Total students",
+        "طالب مسجل في النظام": "Students registered",
+        "حاضرون في الحصة المحددة": "Present in selected lesson",
+        "من إجمالي الطلاب": "of all students",
+        "غائبون في الحصة المحددة": "Absent in selected lesson",
+        "يشمل حالات الغياب المسجلة": "Includes recorded absences",
+        "متأخرون / بعذر في الحصة": "Late / excused in lesson",
+        "تأخر أو غياب بعذر": "Late or excused",
+        "نسبة الحضور في الحصة المحددة": "Attendance rate for selected lesson",
+        "لم يتم تسجيل حضور بعد": "No attendance has been recorded yet",
+        "نسبة الحضور": "Attendance rate",
+        "قائمة الطلاب": "Student list",
+        "إدارة بيانات الطلاب وتسجيل الحضور اليومي": "Manage student records and daily attendance",
+        "تحضير الجميع للحصة المحددة": "Mark everyone present for this lesson",
+        "طباعة التقرير": "Print report",
+        "تصدير Excel": "Export Excel",
+        "ابحث بالاسم أو الرقم الأكاديمي...": "Search by name or academic number...",
+        "بحث عن طالب": "Search students",
+        "إحصائيات الحضور": "Attendance statistics",
+        "فلترة حسب الصف أو الفصل": "Filter by grade or class",
+        "استعادة قائمة الطلاب من كشف الغياب": "Restore the student list from the absence roster",
+        "كل الفصول": "All classes",
+        "الحصة المعروضة في الإحصائيات والفلترة": "Lesson used for statistics and filtering",
+        "كل الحالات": "All statuses",
+        "حاضر": "Present",
+        "غائب": "Absent",
+        "متأخر": "Late",
+        "بعذر": "Excused",
+        "غير مسجل": "Not recorded",
+        "فلترة حسب حالة الحضور": "Filter by attendance status",
+        "الطالب": "Student",
+        "الرقم التسلسلي": "Serial number",
+        "الرقم الأكاديمي": "Academic number",
+        "الصف / الفصل": "Grade / class",
+        "إجراءات": "Actions",
+        "يتم حفظ التغييرات تلقائيًا": "Changes are saved automatically",
+        "معلومات عن البرنامج": "About this program",
+        "عن البرنامج": "About this program",
+        "تم إنشاء هذا الموقع بواسطة:": "This website was created by:",
+        "الرقم الأكاديمي:": "Academic number:",
+        "إغلاق": "Close",
+        "إضافة طالب جديد": "Add a new student",
+        "تعديل بيانات الطالب": "Edit student details",
+        "الاسم الكامل *": "Full name *",
+        "مثال: محمد": "Example: Mohammed",
+        "الرقم التسلسلي *": "Serial number *",
+        "مثال: ١٠٢٤": "Example: 1024",
+        "الرقم الأكاديمي *": "Academic number *",
+        "مثال: ٤٤١٠٠٢٣": "Example: 4410023",
+        "اختر الوحدة": "Select a unit",
+        "اختر المسار": "Select a track",
+        "اختر": "Select",
+        "اختر الصف الدراسي أولًا": "Select a grade first",
+        "المسار": "Track",
+        "الوحدة": "Unit",
+        "المسار *": "Track *",
+        "الوحدة *": "Unit *",
+        "المسار العلمي *": "Science track *",
+        "اختر المسار العلمي": "Select a science track",
+        "الوحدة / التخصص *": "Unit / specialization *",
+        "حفظ البيانات": "Save",
+        "إلغاء": "Cancel",
+        "تعديل": "Edit",
+        "حذف": "Delete",
+        "الملاحظات": "Notes",
+        "رقم الطالب": "Student number",
+        "اسم الطالب": "Student name",
+        "م": "No.",
+        "اختر الوحدة الدراسية": "Select a unit",
+        "الوحدة الدراسية": "Study unit",
+        "كل المسارات": "All tracks",
+        "كل الوحدات": "All units",
+        "جميع الوحدات": "All units",
+        "علمي": "Science",
+        "أدبي": "Literature",
+        "تجاري": "Commerce",
+        "كل مسارات العلمي": "All science tracks",
+        "كل التخصصات": "All specializations",
+        "اختر التخصص العلمي": "Select a science specialization",
+        "علمي فيز وريض": "Science: Physics and Math",
+        "علمي كيم وأحياء": "Science: Chemistry and Biology",
+        "أكمل إعداد عنوان Supabase ومفتاح النشر في supabase-config.js أولًا.": "First configure the Supabase URL and publishable key in supabase-config.js.",
+        "تعذر تحميل خدمة قاعدة البيانات. تحقق من اتصال الإنترنت ثم أعد المحاولة.": "Could not load the database service. Check your internet connection and try again.",
+        "تعذر حفظ البيانات. تحقق من مساحة التخزين في المتصفح.": "Could not save data. Check your browser storage.",
+        "تم دمج تغييرات الجهاز الآخر؛ عند تعديل البيانات نفسها يُعتمد آخر حفظ.": "Changes from another device were merged. If the same data was edited, the latest save was kept.",
+        "حُفظت التغييرات على هذا الجهاز، لكن تعذرت مزامنتها سحابيًا. تحقق من الاتصال ثم أجرِ تغييرًا لإعادة المحاولة.": "Changes were saved on this device but could not sync to the cloud. Check your connection, then make a change to retry.",
+        "جارٍ تحميل السجل...": "Loading roster...",
+        "جارٍ حفظ التغييرات...": "Saving changes...",
+        "فشل الحفظ السحابي": "Cloud save failed",
+        "تم الحفظ والمزامنة": "Saved and synced",
+        "تمت المزامنة": "Synced",
+        "تم تحديث السجل من جهاز آخر": "Roster updated from another device",
+        "تعذر الاتصال بالتحديث الفوري": "Could not connect to live updates",
+        "وصلت بيانات سحابية غير صالحة": "Invalid cloud data received",
+        "وضع محلي — بلا مزامنة": "Local mode — not synced",
+        "حالة الطالب": "Student status",
+        "جميع الطلاب": "All students",
+        "عرض": "Showing",
+        "من": "of",
+        "طالب": "students",
+        "لا توجد نتائج تطابق البحث أو الفلاتر.": "No results match your search or filters.",
+        "لا يوجد طلاب في الاختيار الحالي. يمكنك تعديل خيارات الكشف أو إضافة الطلاب.": "There are no students in this selection. Change the roster options or add students.",
+        "لا يوجد طلاب في الكشف الحالي لتسجيل حضورهم.": "There are no students in the current roster to mark present.",
+        "طالب حاضر": "students present",
+        "تم مسح الحالة": "Status cleared",
+        "تمت إضافة الطالب بنجاح.": "Student added.",
+        "تم تحديث بيانات الطالب.": "Student details updated.",
+        "تم حذف الطالب.": "Student deleted.",
+        "تم تصدير كشف الغياب بصيغة Excel.": "Absence roster exported to Excel.",
+        "لا يوجد طلاب في الكشف المحدد لتصديره.": "There are no students in the selected roster to export.",
+        "لا يوجد طلاب في الفصل المحدد للطباعة.": "There are no students in the selected class to print.",
+        "الرقم الأكاديمي أو بريد الموظف": "Academic number or staff email",
+        "أدخل الرقم الأكاديمي وكلمة المرور للوصول إلى الكشف.": "Enter your academic number and password to access your roster.",
+        "إنشاء حساب طالب": "Create student account",
+        "كلمة المرور (10 أحرف على الأقل)": "Password (at least 10 characters)",
+        "تأكيد كلمة المرور": "Confirm password",
+        "إرسال طلب التسجيل": "Submit registration request",
+        "العودة لتسجيل الدخول": "Back to sign in",
+        "تسجيل الخروج": "Sign out",
+        "تم استلام طلب التسجيل. سيُتاح الدخول بعد موافقة إدارة المدرسة.": "Registration request received. Access will be available after school staff approval.",
+        "بيانات الدخول غير صحيحة أو الحساب غير مفعل.": "Invalid credentials or inactive account.",
+        "أدخل رقماً أكاديمياً صحيحاً وكلمة مرور من 10 أحرف على الأقل.": "Enter a valid academic number and a password of at least 10 characters.",
+        "كلمتا المرور غير متطابقتين.": "The passwords do not match.",
+        "تعذر الاتصال بخدمة تسجيل الدخول. تحقق من إعداد Supabase ثم أعد المحاولة.": "Could not connect to sign-in. Check Supabase configuration and try again.",
+        "لا يوجد سجل طالب مرتبط بهذا الحساب. راجع إدارة المدرسة.": "No student record is linked to this account. Contact school staff.",
+        "ينتظر الحساب موافقة إدارة المدرسة.": "Your account is awaiting school staff approval.",
+        "الحساب غير مفعل أو لا يملك صلاحية مناسبة.": "This account is inactive or does not have the required access.",
+        "اختر الصف الدراسي أولًا.": "Select a grade first.",
+        "اختر المسار أو الوحدة لعرض الكشف.": "Select a track or unit to open the roster.",
+        "اختر التخصص العلمي لعرض الكشف.": "Select a science specialization to open the roster.",
+        "أكمل اختيار الصف والمسار أو الوحدة قبل الحفظ.": "Select a grade and track or unit before saving.",
+        "الرقم التسلسلي مستخدم لطالب آخر.": "This serial number is already assigned to another student.",
+        "الرقم الأكاديمي مستخدم لطالب آخر.": "This academic number is already assigned to another student.",
+        "تم تسجيل حضور": "Attendance recorded for",
+        "تم استعادة كشف الغياب الأصلي.": "Original absence roster restored.",
+        "تعذر الاستعادة. تأكد من إعداد نسخة الكشف الخاصة في قاعدة البيانات.": "Could not restore the roster. Make sure its private backup is configured in the database.",
+        "هل تريد حذف الطالب": "Delete student",
+        "سيتم استبدال قائمة الطلاب الحالية بالكشف الأصلي، وستُمسح تسجيلات الحضور المرتبطة بها. هل تريد المتابعة؟": "The current student list will be replaced by the original roster, and its attendance records will be erased. Continue?",
+        "لا يمكن التراجع عن هذا الإجراء.": "This action cannot be undone.",
+        "تم تسجيل الحضور بنجاح": "Attendance recorded",
+        "تم تسجيل حضور": "Attendance recorded for",
+        "ملاحظة : حضور": "Note: Present",
+        "غياب بعذر": "Excused absence",
+        "غياب": "Absent",
+        "متأخر": "Late"
+      };
+      const reverseTranslations = Object.fromEntries(Object.entries(translations).map(([arabic, english]) => [english, arabic]));
+      let currentLanguage = (() => {
+        try {
+          return localStorage.getItem(LANGUAGE_KEY) === "en" ? "en" : "ar";
+        } catch (error) {
+          console.error("تعذر قراءة تفضيل اللغة:", error);
+          return "ar";
+        }
+      })();
+      function translateCopy(value) {
+        const dictionary = currentLanguage === "en" ? translations : reverseTranslations;
+        const trimmed = value.trim();
+        const replacement = dictionary[trimmed];
+        if (replacement) return value.replace(trimmed, replacement);
+        if (currentLanguage === "ar") {
+          return value
+            .replace(/Al-Hidaya Al-Khalifia Secondary School for Boys/g, "مدرسة الهداية الخليفية الثانوية للبنين")
+            .replace(/Al-Hidaya Al-Khalifia Secondary School/g, "مدرسة الهداية الخليفية الثانوية")
+            .replace(/Academic records portal/g, "بوابة الكشوف الدراسية")
+            .replace(/Electronic Absence Tracking System/g, "برنامج كشف الغياب الإلكتروني");
+        }
+        if (currentLanguage === "en") {
+          const shown = trimmed.match(/^عرض (.+) من (.+) طالب$/);
+          if (shown) return value.replace(trimmed, `Showing ${shown[1]} of ${shown[2]} students`);
+          const recorded = trimmed.match(/^تم تسجيل (\d+) طالب كحاضرين في (.+)\.$/);
+          if (recorded) return value.replace(trimmed, `Marked ${recorded[1]} students present for ${translateValue(recorded[2])}.`);
+          const count = trimmed.match(/^عرض (\d+) من (\d+) طالب$/);
+          if (count) return value.replace(trimmed, `Showing ${count[1]} of ${count[2]} students`);
+          const attendance = trimmed.match(/^(.+): (.+)\.$/);
+          const attendanceStatus = attendance && Object.values(statuses).find((status) => status.label === attendance[2]);
+          if (attendance && attendanceStatus) return value.replace(trimmed, `${translateValue(attendance[1])}: ${attendanceStatus.enLabel}.`);
+          const studentAttendance = trimmed.match(/^حالة (.+) في الحصة (\d+)$/);
+          if (studentAttendance) return value.replace(trimmed, `Status for ${studentAttendance[1]} in lesson ${studentAttendance[2]}`);
+          const studentAction = trimmed.match(/^(تعديل|حذف) (.+)$/);
+          if (studentAction) return value.replace(trimmed, `${translateValue(studentAction[1])} ${studentAction[2]}`);
+          const deletion = trimmed.match(/^هل تريد حذف الطالب "(.+)"؟ لا يمكن التراجع عن هذا الإجراء\.$/);
+          if (deletion) return value.replace(trimmed, `Delete student "${deletion[1]}"? This action cannot be undone.`);
+          return value
+            .replace(/مدرسة الهداية الخليفية الثانوية للبنين/g, translations["مدرسة الهداية الخليفية الثانوية للبنين"])
+            .replace(/بوابة الكشوف الدراسية/g, translations["بوابة الكشوف الدراسية"])
+            .replace(/أول وحد (\d+)/g, "Unit $1")
+            .replace(/أول ثانوي/g, "First secondary")
+            .replace(/ثاني ثانوي/g, "Second secondary")
+            .replace(/ثالث ثانوي/g, "Third secondary")
+            .replace(/الحصة الأولى/g, "Lesson 1")
+            .replace(/الحصة الثانية/g, "Lesson 2")
+            .replace(/الحصة الثالثة/g, "Lesson 3")
+            .replace(/الحصة الرابعة/g, "Lesson 4")
+            .replace(/الحصة الخامسة/g, "Lesson 5")
+            .replace(/الحصة السادسة/g, "Lesson 6")
+            .replace(/الحصة السابعة/g, "Lesson 7")
+            .replace(/جميع الطلاب/g, "All students")
+            .replace(/جميع الصفوف/g, "All grades")
+            .replace(/كل الفصول/g, "All classes")
+            .replace(/علمي فيز وريض/g, translations["علمي فيز وريض"])
+            .replace(/علمي كيم وأحياء/g, translations["علمي كيم وأحياء"])
+            .replace(/علمي/g, "Science")
+            .replace(/أدبي/g, "Literature")
+            .replace(/تجاري/g, "Commerce");
+        }
+        return value;
+      }
+      function translateValue(value) {
+        const exact = currentLanguage === "en" ? translations[value] : reverseTranslations[value];
+        if (exact) return exact;
+        return value.replace(/أول ثانوي|ثاني ثانوي|ثالث ثانوي|أول وحد \d+|علمي|أدبي|تجاري/g, (phrase) => translations[phrase] || phrase);
+      }
+      function applyLanguage(root = document.body) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let textNode;
+        while ((textNode = walker.nextNode())) {
+          if (textNode.parentElement?.closest("#print-report")) continue;
+          if (textNode.parentElement?.closest(".student-name") && !textNode.parentElement?.closest(".student-sub")) continue;
+          const translated = translateCopy(textNode.nodeValue || "");
+          if (translated !== textNode.nodeValue) textNode.nodeValue = translated;
+        }
+        root.querySelectorAll?.("[aria-label], [title], [placeholder]").forEach((element) => {
+          if (element.closest("#print-report, .student-name")) return;
+          ["aria-label", "title", "placeholder"].forEach((attribute) => {
+            const value = element.getAttribute(attribute);
+            if (value) element.setAttribute(attribute, translateCopy(value));
+          });
+        });
+      }
+      function updateLanguagePreference() {
+        document.documentElement.lang = currentLanguage;
+        document.documentElement.dir = currentLanguage === "ar" ? "rtl" : "ltr";
+        document.title = currentLanguage === "ar"
+          ? "مدرسة الهداية الخليفية الثانوية | برنامج كشف الغياب الإلكتروني"
+          : "Al-Hidaya Al-Khalifia Secondary School | Electronic Absence Tracking System";
+        $("#language-toggle").textContent = currentLanguage === "ar" ? "English" : "العربية";
+        $("#language-toggle").setAttribute("aria-label", currentLanguage === "ar" ? "التغيير إلى الإنجليزية" : "Switch to Arabic");
+        applyLanguage();
+      }
+      const statuses = {
+        present: { label: "حاضر", enLabel: "Present", className: "present" },
+        absent: { label: "غائب", enLabel: "Absent", className: "absent" },
+        late: { label: "متأخر", enLabel: "Late", className: "late" },
+        excused: { label: "بعذر", enLabel: "Excused", className: "excused" }
+      };
+      const gradeLabels = { first: "أول ثانوي", second: "ثاني ثانوي", third: "ثالث ثانوي" };
+      const academicTracks = [
+        { value: "scientific", label: "علمي" },
+        { value: "literary", label: "أدبي" },
+        { value: "commercial", label: "تجاري" }
+      ];
+      const firstYearUnits = Array.from({ length: 13 }, (_, index) => `أول وحد ${index + 1}`);
+      const scientificTracks = ["علمي فيز وريض", "علمي كيم وأحياء"];
+      const lessonNames = ["الحصة الأولى", "الحصة الثانية", "الحصة الثالثة", "الحصة الرابعة", "الحصة الخامسة", "الحصة السادسة", "الحصة السابعة"];
+      const $ = (selector) => document.querySelector(selector);
+      const setupError = $("#setup-error");
+      const rows = $("#student-rows");
+      const dialog = $("#student-dialog");
+      let selectedDate = todayKey();
+      let selectedLesson = 0;
+      let activeRosterCriteria = null;
+      let students = [];
+      let currentRole = null;
+      let toastTimer;
+      let cloudLoaded = false;
+      let cloudDirty = false;
+      let cloudSaveTimer = null;
+      let cloudSaveQueue = Promise.resolve();
+      let cloudUpdatedAt = null;
+      let lastSyncedStudents = [];
+      let realtimeChannel = null;
+
+      function todayKey() {
+        const now = new Date();
+        return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+      }
+      function normalizeStudents(records) {
+        if (!Array.isArray(records)) throw new Error("تنسيق السجل السحابي غير صالح.");
+        return records.filter((student) => student && typeof student.id === "string").map((student) => {
+          const attendanceByDate = student.attendanceByDate && typeof student.attendanceByDate === "object"
+            ? Object.fromEntries(Object.entries(student.attendanceByDate).map(([date, day]) => [
+              date,
+              day && typeof day === "object"
+                ? { ...day, lessons: normalizeLessons(day) }
+                : { lessons: Array(7).fill("") }
+            ]))
+            : {};
+          if (student.statusDate && student.status && !attendanceByDate[student.statusDate]) {
+            attendanceByDate[student.statusDate] = { status: student.status };
+          }
+          const currentDay = attendanceByDate[selectedDate] || {};
+          const legacyUnit = /^1وحد(\d+)$/.exec(student.className || "");
+          const grade = student.grade || (legacyUnit ? "first" : "");
+          const unit = student.unit || (legacyUnit ? `أول وحد ${Number(legacyUnit[1])}` : "");
+          const className = legacyUnit ? `${gradeLabels.first} - ${unit}` : student.className;
+          return { ...student, grade, unit, className, attendanceByDate, lessons: normalizeLessons(currentDay) };
+        });
+      }
+      function getSavedStudents() {
+        return students.map((student) => {
+          const attendanceByDate = { ...student.attendanceByDate };
+          const day = { ...(attendanceByDate[selectedDate] || {}) };
+          day.lessons = normalizeLessons({ lessons: student.lessons });
+          delete day.status;
+          if (Object.keys(day).length) attendanceByDate[selectedDate] = day;
+          else delete attendanceByDate[selectedDate];
+          student.attendanceByDate = attendanceByDate;
+          const { status, statusDate, lessons, ...details } = student;
+          return { ...details, attendanceByDate };
+        });
+      }
+      function saveStudents() {
+        if (currentRole !== "staff") {
+          showToast("الحساب غير مفعل أو لا يملك صلاحية مناسبة.", true);
+          return;
+        }
+        if (cloudLoaded) queueCloudSave();
+      }
+      function setCloudStatus(message, state = "") {
+        const indicator = $("#cloud-status");
+        indicator.textContent = translateCopy(message);
+        if (state) indicator.dataset.state = state;
+        else delete indicator.dataset.state;
+      }
+      function applyCloudState(cloudState) {
+        students = normalizeStudents(cloudState.students);
+        cloudUpdatedAt = cloudState.updated_at;
+        lastSyncedStudents = getSavedStudents();
+      }
+      function sameValue(left, right) {
+        return JSON.stringify(left) === JSON.stringify(right);
+      }
+      function mergeStudentChanges(base, local, remote) {
+        const baseById = new Map(base.map((student) => [student.id, student]));
+        const localById = new Map(local.map((student) => [student.id, student]));
+        const remoteById = new Map(remote.map((student) => [student.id, student]));
+        const merged = [];
+        let collisions = false;
+        for (const id of new Set([...baseById.keys(), ...localById.keys(), ...remoteById.keys()])) {
+          const before = baseById.get(id);
+          const current = localById.get(id);
+          const latest = remoteById.get(id);
+          if (!current) {
+            if (before && latest && !sameValue(before, latest)) collisions = true;
+            else if (!before && latest) merged.push(latest);
+            continue;
+          }
+          if (!latest) {
+            if (!before || !sameValue(before, current)) merged.push(current);
+            continue;
+          }
+          if (!before) {
+            merged.push(current);
+            continue;
+          }
+          const item = { ...latest };
+          for (const key of new Set([...Object.keys(before), ...Object.keys(current), ...Object.keys(latest)])) {
+            const localChanged = !sameValue(current[key], before[key]);
+            const remoteChanged = !sameValue(latest[key], before[key]);
+            if (localChanged) {
+              if (remoteChanged && !sameValue(current[key], latest[key])) collisions = true;
+              item[key] = current[key];
+            }
+          }
+          merged.push(item);
+        }
+        return { students: merged, collisions };
+      }
+      async function writeCloudSnapshot(snapshot) {
+        let expectedUpdatedAt = cloudUpdatedAt;
+        let nextSnapshot = snapshot;
+        for (let attempt = 0; attempt < 3; attempt += 1) {
+          const { data, error } = await window.hudurClient.rpc("save_attendance_state", {
+            p_students: nextSnapshot,
+            p_expected_updated_at: expectedUpdatedAt
+          });
+          if (!error) {
+            cloudUpdatedAt = data;
+            lastSyncedStudents = nextSnapshot;
+            if (!cloudSaveTimer) {
+              cloudDirty = false;
+              setCloudStatus("تم الحفظ والمزامنة", "saved");
+            }
+            return;
+          }
+          if (error.code !== "40001" && !error.message.includes("attendance_state_conflict")) throw error;
+          const { data: latest, error: fetchError } = await window.hudurClient
+            .from("attendance_state").select("students, updated_at").eq("id", "school").maybeSingle();
+          if (fetchError) throw fetchError;
+          const merged = mergeStudentChanges(lastSyncedStudents, getSavedStudents(), latest?.students || []);
+          if (merged.collisions) showToast("تم دمج تغييرات الجهاز الآخر؛ عند تعديل البيانات نفسها يُعتمد آخر حفظ.", true);
+          nextSnapshot = merged.students;
+          expectedUpdatedAt = latest?.updated_at || null;
+          cloudUpdatedAt = expectedUpdatedAt;
+          students = normalizeStudents(nextSnapshot);
+          render();
+        }
+        throw new Error("تعذر حفظ التغييرات بسبب استمرار تحديث السجل من جهاز آخر. أعد المحاولة.");
+      }
+      function queueCloudSave() {
+        cloudDirty = true;
+        setCloudStatus("جارٍ حفظ التغييرات...", "");
+        clearTimeout(cloudSaveTimer);
+        cloudSaveTimer = setTimeout(() => {
+          cloudSaveTimer = null;
+          cloudSaveQueue = cloudSaveQueue.catch(() => {}).then(() => writeCloudSnapshot(getSavedStudents())).catch((error) => {
+            console.error("تعذر مزامنة بيانات الحضور:", error);
+            setCloudStatus("فشل الحفظ السحابي", "error");
+            showToast("حُفظت التغييرات على هذا الجهاز، لكن تعذرت مزامنتها سحابيًا. تحقق من الاتصال ثم أجرِ تغييرًا لإعادة المحاولة.", true);
+          });
+        }, 400);
+      }
+      async function loadCloudState() {
+        setCloudStatus("جارٍ تحميل السجل...");
+        const { data, error } = await window.hudurClient.rpc("get_attendance_session");
+        if (error) throw error;
+        if (!data || !Array.isArray(data.students) && data.role !== "pending") {
+          throw new Error("تنسيق جلسة الحضور غير صالح.");
+        }
+        return data;
+      }
+      function subscribeToCloudChanges() {
+        if (currentRole !== "staff") return;
+        realtimeChannel = window.hudurClient.channel("attendance-state-sync")
+          .on("postgres_changes", {
+            event: "UPDATE",
+            schema: "public",
+            table: "attendance_state",
+            filter: "id=eq.school"
+          }, (change) => {
+            const incoming = change.new;
+            if (!incoming || incoming.updated_at === cloudUpdatedAt || cloudDirty) return;
+            if (new Date(incoming.updated_at) <= new Date(cloudUpdatedAt)) return;
+            if (!Array.isArray(incoming.students)) {
+              setCloudStatus("وصلت بيانات سحابية غير صالحة", "error");
+              return;
+            }
+            applyCloudState(incoming);
+            setCloudStatus("تم تحديث السجل من جهاز آخر", "saved");
+            render();
+          })
+          .subscribe((status) => {
+            if (status === "CHANNEL_ERROR" || status === "TIMED_OUT") {
+              setCloudStatus("تعذر الاتصال بالتحديث الفوري", "error");
+              console.error("تعذرت قناة التحديث الفوري لسجل الحضور:", status);
+            }
+          });
+      }
+      function normalizeAcademicNumber(value) {
+        return value.trim()
+          .replace(/[٠-٩]/g, (digit) => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
+          .replace(/[۰-۹]/g, (digit) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
+          .replace(/\D/g, "");
+      }
+      function attendanceAuthEmail(identifier) {
+        const value = identifier.trim();
+        if (value.includes("@")) return value.toLowerCase();
+        const academicNumber = normalizeAcademicNumber(value);
+        if (!academicNumber) throw new Error("أدخل رقماً أكاديمياً صحيحاً.");
+        return `academic.${academicNumber}@accounts.school.invalid`;
+      }
+      function setLoginMessage(message, state = "") {
+        const element = $("#login-message");
+        element.textContent = translateCopy(message);
+        element.dataset.state = state;
+      }
+      function showLoginScreen() {
+        $("#home-screen").hidden = true;
+        $("#roster-picker").hidden = true;
+        $("#dashboard").hidden = true;
+        $("#date-navigation").hidden = true;
+        $("#login-screen").hidden = false;
+        $("#sign-out").hidden = true;
+        $("#login-identifier").focus();
+      }
+      function showHomeScreen() {
+        $("#login-screen").hidden = true;
+        $("#roster-picker").hidden = true;
+        $("#dashboard").hidden = true;
+        $("#date-navigation").hidden = true;
+        $("#home-screen").hidden = false;
+        $("#sign-out").hidden = true;
+        $("#change-roster").hidden = true;
+      }
+      function updateRoleControls() {
+        const isStaff = currentRole === "staff";
+        $("#change-roster").hidden = !isStaff;
+        $("#seed-button").hidden = !isStaff;
+        $("#add-student").hidden = !isStaff;
+        $("#mark-all").hidden = !isStaff;
+        $("#export-button").hidden = !isStaff;
+        $("#search-filter-wrap").hidden = !isStaff;
+        $("#class-filter").hidden = !isStaff;
+        $("#status-filter").hidden = !isStaff;
+        const actionsHeading = document.querySelector("#student-rows")?.closest("table")?.querySelector("th:last-child");
+        if (actionsHeading) actionsHeading.hidden = !isStaff;
+      }
+      async function activateAuthenticatedSession(sessionData) {
+        if (sessionData.role === "pending") {
+          const { error } = await window.hudurClient.auth.signOut();
+          if (error) {
+            console.error("تعذر إنهاء جلسة حساب ينتظر الموافقة:", error);
+            throw error;
+          }
+          setLoginMessage("ينتظر الحساب موافقة إدارة المدرسة.", "error");
+          return false;
+        }
+        if (sessionData.role !== "staff" && sessionData.role !== "student") {
+          throw new Error("الحساب غير مفعل أو لا يملك صلاحية مناسبة.");
+        }
+        if (!Array.isArray(sessionData.students) || (sessionData.role === "student" && sessionData.students.length !== 1)) {
+          if (sessionData.role === "student") {
+            setLoginMessage("لا يوجد سجل طالب مرتبط بهذا الحساب. راجع إدارة المدرسة.", "error");
+            await window.hudurClient.auth.signOut();
+            return false;
+          }
+          throw new Error("تنسيق السجل السحابي غير صالح.");
+        }
+        currentRole = sessionData.role;
+        cloudLoaded = true;
+        cloudDirty = false;
+        $("#class-filter").value = "";
+        $("#search-input").value = "";
+        $("#status-filter").value = "";
+        applyCloudState(sessionData);
+        setCloudStatus("تمت المزامنة", "saved");
+        $("#home-screen").hidden = true;
+        $("#login-screen").hidden = true;
+        $("#sign-out").hidden = false;
+        updateRoleControls();
+        if (currentRole === "staff") {
+          $("#roster-picker").hidden = false;
+          $("#dashboard").hidden = true;
+          $("#date-navigation").hidden = true;
+          $("#change-roster").hidden = true;
+          subscribeToCloudChanges();
+        } else {
+          activeRosterCriteria = { grade: "all", track: "all", unit: "all" };
+          $("#roster-picker").hidden = true;
+          $("#dashboard").hidden = false;
+          $("#date-navigation").hidden = false;
+        }
+        updateDateControls();
+        render();
+        return true;
+      }
+      async function handleSignIn(event) {
+        event.preventDefault();
+        setLoginMessage("");
+        const identifier = $("#login-identifier").value.trim();
+        const password = $("#login-password").value;
+        try {
+          if (!databaseReady || !window.hudurClient) throw new Error("تعذر الاتصال بخدمة تسجيل الدخول. تحقق من إعداد Supabase ثم أعد المحاولة.");
+          const { error } = await window.hudurClient.auth.signInWithPassword({
+            email: attendanceAuthEmail(identifier),
+            password
+          });
+          if (error) throw error;
+          const sessionData = await loadCloudState();
+          await activateAuthenticatedSession(sessionData);
+        } catch (error) {
+          console.error("تعذر تسجيل الدخول:", error);
+          try {
+            const { error: signOutError } = await window.hudurClient?.auth?.signOut() || {};
+            if (signOutError) throw signOutError;
+          } catch (signOutError) {
+            console.error("تعذر إنهاء جلسة تسجيل الدخول غير المكتملة:", signOutError);
+          }
+          setLoginMessage(error.message === "تعذر الاتصال بخدمة تسجيل الدخول. تحقق من إعداد Supabase ثم أعد المحاولة."
+            ? error.message
+            : "بيانات الدخول غير صحيحة أو الحساب غير مفعل.", "error");
+        }
+      }
+      async function handleStudentRegistration(event) {
+        event.preventDefault();
+        setLoginMessage("");
+        const academicNumber = normalizeAcademicNumber($("#registration-academic").value);
+        const password = $("#registration-password").value;
+        if (academicNumber.length < 5 || academicNumber.length > 20 || password.length < 10) {
+          setLoginMessage("أدخل رقماً أكاديمياً صحيحاً وكلمة مرور من 10 أحرف على الأقل.", "error");
+          return;
+        }
+        if (password !== $("#registration-password-confirm").value) {
+          setLoginMessage("كلمتا المرور غير متطابقتين.", "error");
+          return;
+        }
+        try {
+          if (!databaseReady || !window.hudurClient) throw new Error("تعذر الاتصال بخدمة تسجيل الدخول. تحقق من إعداد Supabase ثم أعد المحاولة.");
+          const { data, error } = await window.hudurClient.auth.signUp({
+            email: attendanceAuthEmail(academicNumber),
+            password,
+            options: { data: { academic_number: academicNumber } }
+          });
+          if (error) throw error;
+          if (!data.session) {
+            setLoginMessage("تم إنشاء الحساب، لكن يلزم تعطيل تأكيد البريد في Supabase. تواصل مع إدارة المدرسة لإكمال التفعيل.", "error");
+            return;
+          }
+          const { error: signOutError } = await window.hudurClient.auth.signOut();
+          if (signOutError) {
+            console.error("تم إنشاء الحساب لكن تعذر إنهاء جلسة التسجيل:", signOutError);
+            setLoginMessage("تم إنشاء الحساب، لكن يلزم تعطيل تأكيد البريد في Supabase. تواصل مع إدارة المدرسة لإكمال التفعيل.", "error");
+            return;
+          }
+          $("#registration-form").reset();
+          $("#registration-form").hidden = true;
+          $("#login-form").hidden = false;
+          $("#login-identifier").value = academicNumber;
+          setLoginMessage("تم استلام طلب التسجيل. سيُتاح الدخول بعد موافقة إدارة المدرسة.", "success");
+        } catch (error) {
+          console.error("تعذر إرسال طلب التسجيل:", error);
+          setLoginMessage(error.message === "تعذر الاتصال بخدمة تسجيل الدخول. تحقق من إعداد Supabase ثم أعد المحاولة."
+            ? error.message
+            : "تعذر إرسال الطلب. تحقق من الرقم الأكاديمي أو تواصل مع إدارة المدرسة.", "error");
+        }
+      }
+      function escapeHtml(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+      }
+      function initials(name) {
+        return String(name).trim().split(/\s+/).slice(0, 2).map((part) => part[0] || "").join("");
+      }
+      function showToast(message, isError = false) {
+        const toast = $("#toast");
+        toast.textContent = translateCopy(message);
+        toast.classList.toggle("error", isError);
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 2800);
+      }
+      function normalizeLessons(day) {
+        const values = Array.isArray(day?.lessons)
+          ? day.lessons
+          : Array(7).fill(day?.status || "");
+        return Array.from({ length: 7 }, (_, index) => statuses[values[index]] ? values[index] : "");
+      }
+      function updateClassOptions() {
+        const filter = $("#class-filter");
+        const selected = filter.value;
+        const classes = [...new Set(getRosterStudents().map((student) => student.className.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, "ar"));
+        filter.innerHTML = '<option value="">كل الفصول</option>' + classes.map((name) => `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`).join("");
+        if (classes.includes(selected)) filter.value = selected;
+      }
+      function getRosterStudents() {
+        if (!activeRosterCriteria || activeRosterCriteria.grade === "all") return students;
+        return students.filter((student) => {
+          if (student.grade !== activeRosterCriteria.grade) return false;
+          if (activeRosterCriteria.track !== "all") {
+            if (activeRosterCriteria.grade === "first") {
+              if (student.unit !== activeRosterCriteria.track) return false;
+            } else if (student.track !== activeRosterCriteria.track) {
+              return false;
+            }
+          }
+          if (activeRosterCriteria.grade !== "first"
+            && activeRosterCriteria.track === "scientific"
+            && activeRosterCriteria.unit !== "all"
+            && student.unit !== activeRosterCriteria.unit) return false;
+          return true;
+        });
+      }
+      function filteredStudents() {
+        const query = $("#search-input").value.trim().toLocaleLowerCase("ar");
+        const className = $("#class-filter").value;
+        const status = $("#status-filter").value;
+        const lessonStatus = (student) => student.lessons[selectedLesson] || "";
+        return getRosterStudents().filter((student) => {
+          const matchesQuery = currentRole !== "staff" || !query || [student.name, student.serial, student.academic, student.className].some((value) => String(value).toLocaleLowerCase("ar").includes(query));
+          const matchesClass = !className || student.className === className;
+          const matchesStatus = !status || (status === "unmarked" ? !lessonStatus(student) : lessonStatus(student) === status);
+          return matchesQuery && matchesClass && matchesStatus;
+        });
+      }
+      function formatNumber(value) {
+        return value.toLocaleString(currentLanguage === "ar" ? "ar" : "en-US");
+      }
+      function formatPercent(value) {
+        return `${formatNumber(value)}${currentLanguage === "ar" ? "٪" : "%"}`;
+      }
+      function render() {
+        updateClassOptions();
+        const visible = filteredStudents();
+        const criteriaLabel = activeRosterCriteria?.grade === "all"
+          ? "جميع الصفوف"
+          : activeRosterCriteria
+            ? [gradeLabels[activeRosterCriteria.grade], activeRosterCriteria.grade === "first" ? activeRosterCriteria.track : academicTracks.find((track) => track.value === activeRosterCriteria.track)?.label, activeRosterCriteria.unit !== "all" ? activeRosterCriteria.unit : ""].filter(Boolean).join(" · ")
+            : "جميع الطلاب";
+        $("#current-roster-summary").textContent = currentLanguage === "ar"
+          ? `${criteriaLabel} · ${selectedDateLabel()} · ${lessonNames[selectedLesson]}`
+          : `${translateCopy(criteriaLabel)} · ${selectedDateLabel()} · Lesson ${selectedLesson + 1}`;
+        rows.innerHTML = visible.map((student) => {
+          const lessonControls = [student.lessons[selectedLesson]].map((lessonStatus) => {
+            const lessonIndex = selectedLesson;
+            const statusClass = statuses[lessonStatus]?.className || "";
+            const selectOptions = Object.entries(statuses).map(([key, item]) => `<option value="${key}" ${lessonStatus === key ? "selected" : ""}>${item.label}</option>`).join("");
+            return `<td><select class="field-control status-select ${statusClass}" data-action="lesson" data-lesson="${lessonIndex}" data-id="${escapeHtml(student.id)}" aria-label="حالة ${escapeHtml(student.name)} في الحصة ${lessonIndex + 1}" ${currentRole === "staff" ? "" : "disabled"}><option value="">غير مسجل</option>${selectOptions}</select></td>`;
+          }).join("");
+          return `<tr>
+            <td><div class="student-name"><span class="avatar">${escapeHtml(initials(student.name))}</span><span>${escapeHtml(student.name)}<span class="student-sub">${escapeHtml(student.className)}</span></span></div></td>
+            <td>${escapeHtml(student.serial)}</td><td>${escapeHtml(student.academic)}</td><td>${escapeHtml(student.className)}</td>${lessonControls}
+            ${currentRole === "staff" ? `<td><div class="row-actions">
+              <button class="row-action" type="button" data-action="edit" data-id="${escapeHtml(student.id)}" aria-label="تعديل ${escapeHtml(student.name)}" title="تعديل"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg></button>
+              <button class="row-action delete" type="button" data-action="delete" data-id="${escapeHtml(student.id)}" aria-label="حذف ${escapeHtml(student.name)}" title="حذف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18m-2 0-.9 14H5.9L5 6m4 0V4h6v2m-5 4v6m4-6v6"/></svg></button>
+            </div></td>` : ""}</tr>`;
+        }).join("");
+        if (visible.length === 0) {
+          rows.innerHTML = `<tr><td colspan="${currentRole === "staff" ? 6 : 5}"><div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div>${getRosterStudents().length ? "لا توجد نتائج تطابق البحث أو الفلاتر." : "لا يوجد طلاب في الاختيار الحالي. يمكنك تعديل خيارات الكشف أو إضافة الطلاب."}</div></td></tr>`;
+        }
+        $("#selected-lesson-heading").textContent = lessonNames[selectedLesson];
+        const rosterStudents = getRosterStudents();
+        const total = rosterStudents.length;
+        const lessonStatus = (student) => student.lessons[selectedLesson] || "";
+        const present = rosterStudents.filter((student) => lessonStatus(student) === "present").length;
+        const absent = rosterStudents.filter((student) => lessonStatus(student) === "absent").length;
+        const other = rosterStudents.filter((student) => lessonStatus(student) === "late" || lessonStatus(student) === "excused").length;
+        const percentage = total ? Math.round((present / total) * 100) : 0;
+        $("#total-count").textContent = formatNumber(total);
+        $("#present-count").textContent = formatNumber(present);
+        $("#absent-count").textContent = formatNumber(absent);
+        $("#other-count").textContent = formatNumber(other);
+        $("#present-percent").textContent = formatPercent(percentage);
+        $("#progress-label").textContent = formatPercent(percentage);
+        $("#progress-fill").style.width = `${percentage}%`;
+        $(".progress-track").setAttribute("aria-valuenow", String(percentage));
+        $("#attendance-detail").textContent = currentLanguage === "ar"
+          ? `${lessonNames[selectedLesson]} · ${formatNumber(present)} من ${formatNumber(total)} طالب`
+          : `Lesson ${selectedLesson + 1} · ${formatNumber(present)} of ${formatNumber(total)} students`;
+        $("#results-label").textContent = currentLanguage === "ar"
+          ? `عرض ${formatNumber(visible.length)} من ${formatNumber(total)} طالب`
+          : `Showing ${formatNumber(visible.length)} of ${formatNumber(total)} students`;
+        updatePrintReport();
+        applyLanguage();
+      }
+      function openStudentDialog(student = null) {
+        $("#student-form").reset();
+        $("#student-id").value = student ? student.id : "";
+        $("#dialog-title").textContent = student ? "تعديل بيانات الطالب" : "إضافة طالب جديد";
+        if (student) {
+          $("#full-name").value = student.name;
+          $("#serial-number").value = student.serial;
+          $("#academic-number").value = student.academic;
+          const selection = classSelection(student);
+          $("#student-grade").value = selection.grade;
+          updateClassFields(selection);
+        }
+        if (!student) {
+          if (activeRosterCriteria && activeRosterCriteria.grade !== "all") {
+            $("#student-grade").value = activeRosterCriteria.grade;
+            updateClassFields({
+              track: activeRosterCriteria.track === "all" ? "" : activeRosterCriteria.grade === "first" ? activeRosterCriteria.track : activeRosterCriteria.track,
+              unit: activeRosterCriteria.unit === "all" ? "" : activeRosterCriteria.unit
+            });
+          } else {
+            updateClassFields();
+          }
+        }
+        dialog.showModal();
+        $("#full-name").focus();
+      }
+      function classSelection(student) {
+        const storedGrade = Object.entries(gradeLabels).find(([, label]) => student.grade === label || student.className.startsWith(`${label} - `));
+        if (storedGrade) {
+          return {
+            grade: storedGrade[0],
+            track: storedGrade[0] === "first"
+              ? student.unit || student.className.slice(`${storedGrade[1]} - `.length)
+              : student.track || "",
+            unit: storedGrade[0] === "first" ? "" : student.unit || ""
+          };
+        }
+        if (/^1وحد\d+$/.test(student.className)) {
+          return { grade: "first", track: "", unit: `أول وحد ${Number(student.className.match(/\d+$/)[0])}` };
+        }
+        return { grade: "", track: "", unit: "" };
+      }
+      function updateClassFields(selection = null) {
+        const grade = $("#student-grade").value;
+        const trackField = $("#student-track-field");
+        const trackSelect = $("#student-track");
+        const unitField = $("#student-unit-field");
+        const unitSelect = $("#student-unit");
+        const selectedTrack = selection?.track ?? trackSelect.value;
+        const selectedUnit = selection?.unit ?? unitSelect.value;
+        const hasGrade = Boolean(grade);
+        trackField.hidden = !hasGrade;
+        unitField.hidden = true;
+        trackSelect.required = hasGrade;
+        unitSelect.required = false;
+        $("#student-track-label").textContent = grade === "first" ? "الوحدة *" : "المسار *";
+
+        if (!hasGrade) {
+          trackSelect.replaceChildren(new Option("اختر الصف الدراسي أولًا", ""));
+          unitSelect.replaceChildren(new Option("اختر", ""));
+          return;
+        }
+        const choices = grade === "first"
+          ? firstYearUnits.map((label) => ({ value: label, label }))
+          : academicTracks;
+        trackSelect.replaceChildren(new Option(grade === "first" ? "اختر الوحدة" : "اختر المسار", ""), ...choices.map((item) => new Option(item.label, item.value)));
+        trackSelect.value = selectedTrack || "";
+
+        const showScientificUnit = grade !== "first" && trackSelect.value === "scientific";
+        if (showScientificUnit) {
+          unitField.hidden = false;
+          unitSelect.required = true;
+          $("#student-unit-label").textContent = "المسار العلمي *";
+          const units = scientificTracks.map((label) => ({ value: label, label }));
+          unitSelect.replaceChildren(new Option("اختر المسار العلمي", ""), ...units.map((item) => new Option(item.label, item.value)));
+          unitSelect.value = selectedUnit || "";
+        } else {
+          unitSelect.replaceChildren(new Option("اختر", ""));
+          unitSelect.value = "";
+        }
+      }
+      function refreshPickerOptions(preserveSelection = true) {
+        const grade = $("#picker-grade").value;
+        const trackField = $("#picker-track-field");
+        const unitField = $("#picker-unit-field");
+        const trackSelect = $("#picker-track");
+        const unitSelect = $("#picker-unit");
+        const previousTrack = preserveSelection ? trackSelect.value : "";
+        const previousUnit = preserveSelection ? unitSelect.value : "";
+        trackField.hidden = !grade || grade === "all";
+        unitField.hidden = true;
+        trackSelect.required = Boolean(grade && grade !== "all");
+        unitSelect.required = false;
+        if (!grade || grade === "all") {
+          trackSelect.replaceChildren(new Option("كل المسارات", "all"));
+          unitSelect.replaceChildren(new Option("كل التخصصات", "all"));
+          return;
+        }
+        const options = grade === "first"
+          ? [{ value: "all", label: "جميع الوحدات" }, ...firstYearUnits.map((label) => ({ value: label, label }))]
+          : [{ value: "all", label: "جميع المسارات" }, ...academicTracks];
+        $("#picker-track-label").textContent = grade === "first" ? "الوحدة الدراسية" : "المسار";
+        trackSelect.replaceChildren(new Option(grade === "first" ? "اختر الوحدة" : "اختر المسار", ""), ...options.map((item) => new Option(item.label, item.value)));
+        trackSelect.value = options.some((item) => item.value === previousTrack) ? previousTrack : "";
+
+        if (grade !== "first" && trackSelect.value === "scientific") {
+          unitField.hidden = false;
+          unitSelect.required = true;
+          const unitOptions = [{ value: "all", label: "كل مسارات العلمي" }, ...scientificTracks.map((label) => ({ value: label, label }))];
+          unitSelect.replaceChildren(new Option("اختر التخصص العلمي", ""), ...unitOptions.map((item) => new Option(item.label, item.value)));
+          unitSelect.value = unitOptions.some((item) => item.value === previousUnit) ? previousUnit : "";
+        } else {
+          unitSelect.replaceChildren(new Option("كل التخصصات", "all"));
+          unitSelect.value = "all";
+        }
+      }
+      function applyRosterSelection() {
+        if (currentRole !== "staff") {
+          setLoginMessage("الحساب غير مفعل أو لا يملك صلاحية مناسبة.", "error");
+          return false;
+        }
+        const grade = $("#picker-grade").value;
+        if (!grade) {
+          showToast("اختر الصف الدراسي أولًا.", true);
+          return false;
+        }
+        const track = grade === "all" ? "all" : $("#picker-track").value;
+        if (grade !== "all" && !track) {
+          showToast("اختر المسار أو الوحدة لعرض الكشف.", true);
+          return false;
+        }
+        const unit = grade !== "all" && grade !== "first" && track === "scientific" ? $("#picker-unit").value : "all";
+        if (grade !== "all" && grade !== "first" && track === "scientific" && !unit) {
+          showToast("اختر التخصص العلمي لعرض الكشف.", true);
+          return false;
+        }
+        selectedDate = $("#picker-date").value || todayKey();
+        selectedLesson = Number($("#picker-lesson").value);
+        activeRosterCriteria = { grade, track, unit };
+        $("#attendance-date").value = selectedDate;
+        $("#lesson-filter").value = String(selectedLesson);
+        $("#class-filter").value = "";
+        $("#search-input").value = "";
+        $("#status-filter").value = "";
+        $("#home-screen").hidden = true;
+        $("#roster-picker").hidden = true;
+        $("#dashboard").hidden = false;
+        $("#date-navigation").hidden = false;
+        $("#change-roster").hidden = false;
+        updateDateControls();
+        render();
+        return true;
+      }
+      function showRosterPicker() {
+        if (currentRole !== "staff") return;
+        if (activeRosterCriteria) {
+          $("#picker-grade").value = activeRosterCriteria.grade;
+          refreshPickerOptions(false);
+          $("#picker-track").value = activeRosterCriteria.track;
+          refreshPickerOptions(true);
+          if (!$("#picker-unit-field").hidden) $("#picker-unit").value = activeRosterCriteria.unit;
+        }
+        $("#picker-date").value = selectedDate;
+        $("#picker-lesson").value = String(selectedLesson);
+        $("#dashboard").hidden = true;
+        $("#date-navigation").hidden = true;
+        $("#roster-picker").hidden = false;
+        $("#change-roster").hidden = true;
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+      function selectedClassName() {
+        const grade = $("#student-grade").value;
+        const track = $("#student-track").value;
+        const unit = $("#student-unit").value;
+        if (!grade || !track) return "";
+        const description = grade === "first" ? track : track === "scientific" ? unit : track;
+        if (!description || (grade !== "first" && track === "scientific" && !unit)) return "";
+        return `${gradeLabels[grade]} - ${description}`;
+      }
+      function selectedClassDetails() {
+        const grade = $("#student-grade").value;
+        const track = $("#student-track").value;
+        return {
+          grade,
+          track: grade === "first" ? "" : track,
+          unit: grade === "first" ? track : track === "scientific" ? $("#student-unit").value : "",
+          className: selectedClassName()
+        };
+      }
+      function selectedDateLabel() {
+        return new Date(`${selectedDate}T12:00:00`).toLocaleDateString(currentLanguage === "ar" ? "ar-SA" : "en-US", {
+          weekday: "long", day: "numeric", month: "long", year: "numeric"
+        });
+      }
+      function updateDateControls() {
+        $("#attendance-date").value = selectedDate;
+        $("#today-label").textContent = selectedDateLabel();
+        $("#picker-date").value = selectedDate;
+      }
+      function setSelectedDate(date) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+        selectedDate = date;
+        students.forEach((student) => {
+          student.lessons = normalizeLessons(student.attendanceByDate[selectedDate]);
+        });
+        updateDateControls();
+        render();
+      }
+      function dateOffset(date, offset) {
+        const [year, month, day] = date.split("-").map(Number);
+        const next = new Date(year, month - 1, day + offset, 12);
+        return `${next.getFullYear()}-${String(next.getMonth() + 1).padStart(2, "0")}-${String(next.getDate()).padStart(2, "0")}`;
+      }
+      function lessonCode(student) {
+        return student.lessons.map((status) => {
+          if (status === "present") return "✓";
+          if (status === "absent") return "غ";
+          if (status === "excused") return "غ";
+          if (status === "late") return "م";
+          return "";
+        });
+      }
+      function sheetRowsHtml(printedStudents) {
+        return printedStudents.map((student, index) => {
+          const codes = lessonCode(student);
+          const lessonCells = codes.map((code) => `<td>${code}</td>`).join("");
+          return `<tr><td>${escapeHtml(student.serial || index + 1)}</td><td>${escapeHtml(student.academic)}</td><td class="sheet-name">${escapeHtml(student.name)}</td>${lessonCells}<td></td></tr>`;
+        }).join("");
+      }
+      function sheetTableHtml(printedStudents) {
+        return `<table class="sheet-table"><colgroup><col style="width:4%"><col style="width:15%"><col style="width:31%">${Array.from({ length: 7 }, () => '<col style="width:6.1%">').join("")}<col style="width:7.3%"></colgroup>
+          <thead><tr><th>م</th><th>رقم الطالب<br>الأكاديمي</th><th>اسم الطالب</th><th>الحصة<br>الأولى</th><th>الحصة<br>الثانية</th><th>الحصة<br>الثالثة</th><th>الحصة<br>الرابعة</th><th>الحصة<br>الخامسة</th><th>الحصة<br>السادسة</th><th>الحصة<br>السابعة</th><th>الملاحظات</th></tr></thead>
+          <tbody>${sheetRowsHtml(printedStudents)}</tbody></table>`;
+      }
+      function sheetHeaderHtml(printedStudents, className) {
+        const scope = className || "جميع الفصول";
+        const absentStudents = printedStudents.filter((student) => student.lessons
+          .some((status) => status === "absent" || status === "excused")).length;
+        return `<header class="sheet-header"><h1>مدرسة : الهداية الخليفية الثانوية للبنين</h1></header>
+          <div class="sheet-meta"><span>الصف / الفصل: ${escapeHtml(scope)}</span><span>تاريخ التسجيل: ${escapeHtml(selectedDate)}</span><span>رمز النموذج : </span></div>
+          <div class="sheet-scope"><span>عدد الطلاب: ${printedStudents.length.toLocaleString("ar")}</span><span>الطلبة الغائبون: ${absentStudents.toLocaleString("ar")}</span></div>`;
+      }
+      function getPrintedStudents() {
+        const className = $("#class-filter").value;
+        const rosterStudents = getRosterStudents();
+        const printedStudents = className ? rosterStudents.filter((student) => student.className === className) : rosterStudents;
+        const criteriaLabel = !activeRosterCriteria || activeRosterCriteria.grade === "all"
+          ? "جميع الفصول"
+          : [gradeLabels[activeRosterCriteria.grade], activeRosterCriteria.grade === "first"
+            ? activeRosterCriteria.track === "all" ? "جميع الوحدات" : activeRosterCriteria.track
+            : academicTracks.find((track) => track.value === activeRosterCriteria.track)?.label,
+          activeRosterCriteria.unit !== "all" ? activeRosterCriteria.unit : ""].filter(Boolean).join(" - ");
+        return { printedStudents, className: className || criteriaLabel };
+      }
+      function updatePrintReport() {
+        const { printedStudents, className } = getPrintedStudents();
+        $("#print-report").innerHTML = `${sheetHeaderHtml(printedStudents, className)}${sheetTableHtml(printedStudents)}<footer class="sheet-footer">ملاحظة : حضور --&lt; ✓ — غياب --&lt; غ — غياب بعذر --&lt; غ — متأخر --&lt; م</footer>`;
+      }
+      function exportExcel() {
+        const { printedStudents, className } = getPrintedStudents();
+        if (!printedStudents.length) { showToast("لا يوجد طلاب في الكشف المحدد لتصديره.", true); return; }
+        const workbook = `<!doctype html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" dir="rtl"><head><meta charset="utf-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>كشف الغياب</x:Name><x:WorksheetOptions><x:PageSetup><x:Layout x:Orientation="Portrait"/></x:PageSetup><x:FitToPage/><x:Print><x:ValidPrinterInfo/><x:PaperSizeIndex>9</x:PaperSizeIndex><x:HorizontalResolution>600</x:HorizontalResolution><x:VerticalResolution>600</x:HorizontalResolution></x:Print><x:Selected/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--><style>@page{size:A4 portrait;margin:7mm}body{font-family:Tahoma,Arial,sans-serif;direction:rtl;color:#172033}.sheet-header{text-align:center}.sheet-header h1{font-size:13pt;margin:0}.sheet-meta{display:flex;justify-content:space-between;border-bottom:1px solid #222;padding:2mm 0;margin-bottom:1mm;font-size:8pt}.sheet-scope{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;font-size:8pt;font-weight:bold;margin:1mm 0 2mm}.sheet-table{width:100%;table-layout:fixed;border-collapse:collapse;text-align:center;font-size:7.5pt}.sheet-table th,.sheet-table td{border:1px solid #222;padding:1mm;white-space:normal;overflow-wrap:break-word;word-break:normal;vertical-align:middle}.sheet-table th{background:#e8e8e8;font-weight:bold;line-height:1.15}.sheet-table td{height:6mm;line-height:1.2}.sheet-name{text-align:right}</style></head><body>${sheetHeaderHtml(printedStudents, className)}${sheetTableHtml(printedStudents)}<div style="font-size:8pt;margin-top:2mm">ملاحظة : حضور --&lt; ✓ — غياب --&lt; غ — غياب بعذر --&lt; غ — متأخر --&lt; م</div></body></html>`;
+        const blob = new Blob(["\uFEFF", workbook], { type: "application/vnd.ms-excel;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `كشف-الغياب-${selectedDate}.xls`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+        showToast("تم تصدير كشف الغياب بصيغة Excel.");
+      }
+      function printReport() {
+        const { printedStudents } = getPrintedStudents();
+        if (!printedStudents.length) {
+          showToast("لا يوجد طلاب في الفصل المحدد للطباعة.", true);
+          return;
+        }
+        updatePrintReport();
+        window.print();
+      }
+
+      updateDateControls();
+      $("#picker-date").value = selectedDate;
+      refreshPickerOptions(false);
+      updateLanguagePreference();
+      const translationObserver = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+          if (mutation.type === "characterData") {
+            const translated = translateCopy(mutation.target.nodeValue || "");
+            if (translated !== mutation.target.nodeValue) mutation.target.nodeValue = translated;
+          } else {
+            mutation.addedNodes.forEach((node) => {
+              if (node.nodeType === Node.TEXT_NODE) {
+                const translated = translateCopy(node.nodeValue || "");
+                if (translated !== node.nodeValue) node.nodeValue = translated;
+              } else if (node.nodeType === Node.ELEMENT_NODE) {
+                applyLanguage(node);
+              }
+            });
+          }
+        }
+      });
+      translationObserver.observe(document.body, { childList: true, characterData: true, subtree: true });
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === "dark" || savedTheme === "light") document.documentElement.dataset.theme = savedTheme;
+      $("#theme-toggle").addEventListener("click", () => {
+        const theme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = theme;
+        try { localStorage.setItem(THEME_KEY, theme); } catch (error) { console.error("تعذر حفظ تفضيل المظهر:", error); }
+      });
+      $("#language-toggle").addEventListener("click", () => {
+        currentLanguage = currentLanguage === "ar" ? "en" : "ar";
+        try {
+          localStorage.setItem(LANGUAGE_KEY, currentLanguage);
+        } catch (error) {
+          console.error("تعذر حفظ تفضيل اللغة:", error);
+        }
+        updateLanguagePreference();
+        updateDateControls();
+        render();
+      });
+      const developerDialog = $("#developer-dialog");
+      $("#developer-info-button").addEventListener("click", () => developerDialog.showModal());
+      $("#close-developer-dialog").addEventListener("click", () => developerDialog.close());
+      $("#start-button").addEventListener("click", () => {
+        if (currentRole === "staff") {
+          $("#home-screen").hidden = true;
+          $("#roster-picker").hidden = false;
+          $("#picker-grade").focus();
+        } else if (currentRole === "student") {
+          $("#home-screen").hidden = true;
+          $("#dashboard").hidden = false;
+          $("#date-navigation").hidden = false;
+        } else {
+          showLoginScreen();
+        }
+      });
+      $("#back-home").addEventListener("click", () => {
+        $("#roster-picker").hidden = true;
+        $("#home-screen").hidden = false;
+        $("#start-button").focus();
+      });
+      $("#login-back-home").addEventListener("click", showHomeScreen);
+      $("#login-form").addEventListener("submit", handleSignIn);
+      $("#registration-form").addEventListener("submit", handleStudentRegistration);
+      $("#show-registration").addEventListener("click", () => {
+        $("#login-form").hidden = true;
+        $("#registration-form").hidden = false;
+        setLoginMessage("");
+        $("#registration-academic").focus();
+      });
+      $("#show-login").addEventListener("click", () => {
+        $("#registration-form").hidden = true;
+        $("#login-form").hidden = false;
+        setLoginMessage("");
+        $("#login-identifier").focus();
+      });
+      $("#sign-out").addEventListener("click", async () => {
+        if (cloudDirty || cloudSaveTimer) {
+          showToast("جارٍ حفظ التغييرات...", true);
+          return;
+        }
+        try {
+          if (realtimeChannel) {
+            await window.hudurClient.removeChannel(realtimeChannel);
+            realtimeChannel = null;
+          }
+          const { error } = await window.hudurClient.auth.signOut();
+          if (error) throw error;
+          currentRole = null;
+          cloudLoaded = false;
+          students = [];
+          activeRosterCriteria = null;
+          setCloudStatus("");
+          showHomeScreen();
+        } catch (error) {
+          console.error("تعذر تسجيل الخروج:", error);
+          showToast("تعذر تسجيل الخروج. أعد المحاولة.", true);
+        }
+      });
+      $("#add-student").addEventListener("click", () => openStudentDialog());
+      $("#close-dialog").addEventListener("click", () => dialog.close());
+      $("#cancel-dialog").addEventListener("click", () => dialog.close());
+      $("#student-grade").addEventListener("change", () => updateClassFields({ track: "", unit: "" }));
+      $("#student-track").addEventListener("change", (event) => updateClassFields({ track: event.target.value, unit: "" }));
+      $("#student-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (currentRole !== "staff") return;
+        const id = $("#student-id").value;
+        const existingStudent = students.find((item) => item.id === id);
+        const classDetails = selectedClassDetails();
+        if (!classDetails.className) {
+          showToast("أكمل اختيار الصف والمسار أو الوحدة قبل الحفظ.", true);
+          return;
+        }
+        const student = {
+          id: id || (crypto.randomUUID ? crypto.randomUUID() : `student-${Date.now()}-${Math.random().toString(16).slice(2)}`),
+          name: $("#full-name").value.trim(),
+          serial: $("#serial-number").value.trim(),
+          academic: $("#academic-number").value.trim(),
+          grade: classDetails.grade,
+          track: classDetails.track,
+          unit: classDetails.unit,
+          className: classDetails.className,
+          lessons: existingStudent?.lessons || Array(7).fill(""),
+          attendanceByDate: existingStudent?.attendanceByDate || {}
+        };
+        const duplicate = students.find((item) => item.id !== id && (item.serial === student.serial || item.academic === student.academic));
+        if (duplicate) {
+          showToast(duplicate.serial === student.serial ? "الرقم التسلسلي مستخدم لطالب آخر." : "الرقم الأكاديمي مستخدم لطالب آخر.", true);
+          return;
+        }
+        if (id) students = students.map((item) => item.id === id ? student : item);
+        else students.push(student);
+        saveStudents();
+        render();
+        dialog.close();
+        showToast(id ? "تم تحديث بيانات الطالب." : "تمت إضافة الطالب بنجاح.");
+      });
+      rows.addEventListener("change", (event) => {
+        if (currentRole !== "staff") return;
+        const select = event.target.closest('[data-action="lesson"]');
+        if (!select) return;
+        const student = students.find((item) => item.id === select.dataset.id);
+        if (!student) return;
+        const lessonIndex = Number(select.dataset.lesson);
+        if (!Number.isInteger(lessonIndex) || lessonIndex < 0 || lessonIndex >= 7) return;
+        student.lessons[lessonIndex] = select.value;
+        saveStudents();
+        render();
+        showToast(`${lessonNames[lessonIndex]}: ${select.value ? statuses[select.value].label : "تم مسح الحالة"}.`);
+      });
+      rows.addEventListener("click", (event) => {
+        if (currentRole !== "staff") return;
+        const button = event.target.closest("[data-action]");
+        if (!button) return;
+        const student = students.find((item) => item.id === button.dataset.id);
+        if (!student) return;
+        if (button.dataset.action === "edit") openStudentDialog(student);
+        if (button.dataset.action === "delete") {
+          if (!window.confirm(`هل تريد حذف الطالب "${student.name}"؟ لا يمكن التراجع عن هذا الإجراء.`)) return;
+          students = students.filter((item) => item.id !== student.id);
+          saveStudents();
+          render();
+          showToast("تم حذف الطالب.");
+        }
+      });
+      $("#search-input").addEventListener("input", render);
+      $("#class-filter").addEventListener("change", render);
+      $("#status-filter").addEventListener("change", render);
+      $("#lesson-filter").addEventListener("change", (event) => {
+        selectedLesson = Number(event.target.value);
+        render();
+      });
+      $("#attendance-date").addEventListener("change", (event) => setSelectedDate(event.target.value));
+      $("#picker-grade").addEventListener("change", () => refreshPickerOptions(false));
+      $("#picker-track").addEventListener("change", () => refreshPickerOptions(true));
+      $("#roster-picker-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        applyRosterSelection();
+      });
+      $("#change-roster").addEventListener("click", showRosterPicker);
+      $("#prev-date").addEventListener("click", () => setSelectedDate(dateOffset(selectedDate, -1)));
+      $("#next-date").addEventListener("click", () => setSelectedDate(dateOffset(selectedDate, 1)));
+      $("#today-button").addEventListener("click", () => setSelectedDate(todayKey()));
+      $("#mark-all").addEventListener("click", () => {
+        if (currentRole !== "staff") return;
+        const selectedIds = new Set(filteredStudents().map((student) => student.id));
+        if (!selectedIds.size) { showToast("لا يوجد طلاب في الكشف الحالي لتسجيل حضورهم.", true); return; }
+        students = students.map((student) => {
+          if (selectedIds.has(student.id)) student.lessons[selectedLesson] = "present";
+          return student;
+        });
+        saveStudents();
+        render();
+        showToast(`تم تسجيل ${formatNumber(selectedIds.size)} طالب كحاضرين في ${lessonNames[selectedLesson]}.`);
+      });
+      $("#seed-button").addEventListener("click", async () => {
+        if (currentRole !== "staff") return;
+        const confirmed = window.confirm("سيتم استبدال قائمة الطلاب الحالية بالكشف الأصلي، وستُمسح تسجيلات الحضور المرتبطة بها. هل تريد المتابعة؟");
+        if (!confirmed) return;
+        const { data, error } = await window.hudurClient
+          .from("attendance_roster_backup").select("students").eq("id", "school").maybeSingle();
+        if (error || !data) {
+          console.error("تعذر استعادة الكشف الأصلي:", error || "لم يتم إعداد نسخة احتياطية للكشف.");
+          showToast("تعذر الاستعادة. تأكد من إعداد نسخة الكشف الخاصة في قاعدة البيانات.", true);
+          return;
+        }
+        students = data.students.map((student) => ({ ...student, lessons: Array(7).fill(""), attendanceByDate: {} }));
+        saveStudents();
+        render();
+        showToast("تم استعادة كشف الغياب الأصلي.");
+      });
+      $("#export-button").addEventListener("click", exportExcel);
+      $("#print-button").addEventListener("click", printReport);
+      try {
+        if (!databaseReady) throw new Error("تعذر تهيئة اتصال قاعدة البيانات.");
+        const { data, error } = await window.hudurClient.auth.getSession();
+        if (error) throw error;
+        if (data.session) {
+          const sessionData = await loadCloudState();
+          await activateAuthenticatedSession(sessionData);
+        }
+      } catch (error) {
+        console.error("تعذر استعادة جلسة تسجيل الدخول:", error);
+        setupError.hidden = false;
+        setupError.textContent = "تعذر الاتصال بقاعدة البيانات. لا يمكن فتح الكشف قبل إعداد تسجيل الدخول وقواعد الصلاحيات.";
+      }
+    })();
+  </script>
+</body>
+</html>

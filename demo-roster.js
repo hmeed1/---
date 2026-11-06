@@ -1,0 +1,1 @@
+window.ATTENDANCE_DEMO_ROSTER = [];
