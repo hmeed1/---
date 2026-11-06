@@ -226,8 +226,9 @@
     #lesson-filter { width: 175px; }
     .table-scroll { overflow-x: auto; }
     table { border-collapse: collapse; width: 100%; min-width: 800px; text-align: right; }
-    .students-table { min-width: 980px; }
+    .students-table { min-width: 1160px; }
     .students-table th:nth-child(5), .students-table td:nth-child(5) { min-width: 135px; text-align: center; }
+    .students-table th:nth-child(6), .students-table td.note-cell { min-width: 190px; }
     thead { background: var(--surface-soft); }
     th { font-size: 11px; color: var(--muted); font-weight: 700; padding: 12px 20px; white-space: nowrap; }
     td { padding: 12px 20px; border-top: 1px solid var(--line); font-size: 12px; white-space: nowrap; }
@@ -235,6 +236,8 @@
     .student-name { display: flex; align-items: center; gap: 10px; font-weight: 700; }
     .avatar { width: 35px; height: 35px; border-radius: 11px; display: grid; place-items: center; color: var(--primary); background: var(--primary-soft); font-weight: 800; font-size: 12px; flex: 0 0 auto; }
     .student-sub { color: var(--muted); font-size: 10px; font-weight: 500; display: block; margin-top: 1px; }
+    .note-control { width: 100%; min-height: 34px; resize: vertical; font-size: 11px; }
+    .note-cell { white-space: normal; }
     .status-select { width: 100%; max-width: 108px; height: 32px; border-radius: 9px; font-weight: 700; font-size: 11px; padding: 0 6px; }
     .status-select.present { color: var(--green); background: var(--green-soft); border-color: transparent; }
     .status-select.absent { color: var(--red); background: var(--red-soft); border-color: transparent; }
@@ -292,6 +295,7 @@
     .sheet-table th { background: #f0f0f0; font-weight: 700; line-height: 1.15; }
     .sheet-table td { min-height: 25px; line-height: 1.25; }
     .sheet-table .sheet-name { text-align: right; }
+    .academic-number { direction: ltr; unicode-bidi: isolate; text-align: left; }
     .sheet-note { margin-top: 5px; display: flex; justify-content: space-between; font-size: 9px; }
     .sheet-scope { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 3px 0 6px; text-align: center; font-size: 10px; font-weight: 700; }
 
@@ -426,7 +430,7 @@
         <form class="login-form" id="login-form">
           <div class="login-field">
             <label for="login-identifier">الرقم الأكاديمي أو بريد الموظف</label>
-            <input class="field-control" id="login-identifier" required autocomplete="username" maxlength="120">
+            <input class="field-control academic-number" id="login-identifier" dir="ltr" required autocomplete="username" maxlength="120">
           </div>
           <div class="login-field">
             <label for="login-password">كلمة المرور</label>
@@ -440,7 +444,7 @@
         <form class="login-form" id="registration-form" hidden>
           <div class="login-field">
             <label for="registration-academic">الرقم الأكاديمي</label>
-            <input class="field-control" id="registration-academic" required autocomplete="username" inputmode="numeric" maxlength="30">
+            <input class="field-control academic-number" id="registration-academic" dir="ltr" required autocomplete="username" inputmode="numeric" maxlength="30">
           </div>
           <div class="login-field">
             <label for="registration-password">كلمة المرور (10 أحرف على الأقل)</label>
@@ -607,7 +611,7 @@
       </div>
       <div class="table-scroll">
         <table class="students-table">
-          <thead><tr><th>الطالب</th><th>الرقم التسلسلي</th><th>الرقم الأكاديمي</th><th>الصف / الفصل</th><th id="selected-lesson-heading">الحصة الأولى</th><th>إجراءات</th></tr></thead>
+          <thead><tr><th>الطالب</th><th>الرقم التسلسلي</th><th>الرقم الأكاديمي</th><th>الصف / الفصل</th><th id="selected-lesson-heading">الحصة الأولى</th><th>الملاحظات</th><th>إجراءات</th></tr></thead>
           <tbody id="student-rows"></tbody>
         </table>
       </div>
@@ -627,7 +631,7 @@
       <div class="form-grid">
         <div class="form-field full"><label for="full-name">الاسم الكامل *</label><input class="field-control" id="full-name" name="name" required maxlength="100" autocomplete="name" placeholder="مثال: محمد"></div>
         <div class="form-field"><label for="serial-number">الرقم التسلسلي *</label><input class="field-control" id="serial-number" name="serial" required maxlength="30" placeholder="مثال: ١٠٢٤"></div>
-        <div class="form-field"><label for="academic-number">الرقم الأكاديمي *</label><input class="field-control" id="academic-number" name="academic" required maxlength="30" placeholder="مثال: ٤٤١٠٠٢٣"></div>
+        <div class="form-field"><label for="academic-number">الرقم الأكاديمي *</label><input class="field-control academic-number" id="academic-number" name="academic" dir="ltr" required maxlength="30" placeholder="مثال: 4410023"></div>
         <div class="form-field full"><label for="student-grade">الصف الدراسي *</label>
           <select class="field-control" id="student-grade" required>
             <option value="">اختر الصف الدراسي</option><option value="first">أول ثانوي</option><option value="second">ثاني ثانوي</option><option value="third">ثالث ثانوي</option>
@@ -706,6 +710,7 @@
         "دخول": "Sign in",
         "إنشاء حساب طالب": "Create student account",
         "الرقم الأكاديمي": "Academic number",
+        "أضف ملاحظة...": "Add a note...",
         "كلمة المرور (10 أحرف على الأقل)": "Password (at least 10 characters)",
         "تأكيد كلمة المرور": "Confirm password",
         "إرسال طلب التسجيل": "Submit registration request",
@@ -1045,7 +1050,7 @@
             ? Object.fromEntries(Object.entries(student.attendanceByDate).map(([date, day]) => [
               date,
               day && typeof day === "object"
-                ? { ...day, lessons: normalizeLessons(day) }
+                ? { ...day, lessons: normalizeLessons(day), notes: typeof day.notes === "string" ? day.notes : "" }
                 : { lessons: Array(7).fill("") }
             ]))
             : {};
@@ -1215,6 +1220,11 @@
           .replace(/[٠-٩]/g, (digit) => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
           .replace(/[۰-۹]/g, (digit) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)))
           .replace(/\D/g, "");
+      }
+      function academicNumberForDisplay(value) {
+        return String(value ?? "")
+          .replace(/[٠-٩]/g, (digit) => String("٠١٢٣٤٥٦٧٨٩".indexOf(digit)))
+          .replace(/[۰-۹]/g, (digit) => String("۰۱۲۳۴۵۶۷۸۹".indexOf(digit)));
       }
       function attendanceAuthEmail(identifier) {
         const value = identifier.trim();
@@ -1429,7 +1439,10 @@
         const status = $("#status-filter").value;
         const lessonStatus = (student) => student.lessons[selectedLesson] || "";
         return getRosterStudents().filter((student) => {
-          const matchesQuery = currentRole !== "staff" || !query || [student.name, student.serial, student.academic, student.className].some((value) => String(value).toLocaleLowerCase("ar").includes(query));
+          const academicQuery = academicNumberForDisplay(query);
+          const matchesQuery = currentRole !== "staff" || !query
+            || [student.name, student.serial, student.className].some((value) => String(value).toLocaleLowerCase("ar").includes(query))
+            || academicNumberForDisplay(student.academic).includes(academicQuery);
           const matchesClass = !className || student.className === className;
           const matchesStatus = !status || (status === "unmarked" ? !lessonStatus(student) : lessonStatus(student) === status);
           return matchesQuery && matchesClass && matchesStatus;
@@ -1459,16 +1472,18 @@
             const selectOptions = Object.entries(statuses).map(([key, item]) => `<option value="${key}" ${lessonStatus === key ? "selected" : ""}>${item.label}</option>`).join("");
             return `<td><select class="field-control status-select ${statusClass}" data-action="lesson" data-lesson="${lessonIndex}" data-id="${escapeHtml(student.id)}" aria-label="حالة ${escapeHtml(student.name)} في الحصة ${lessonIndex + 1}" ${currentRole === "staff" ? "" : "disabled"}><option value="">غير مسجل</option>${selectOptions}</select></td>`;
           }).join("");
+          const note = student.attendanceByDate[selectedDate]?.notes || "";
           return `<tr>
             <td><div class="student-name"><span class="avatar">${escapeHtml(initials(student.name))}</span><span>${escapeHtml(student.name)}<span class="student-sub">${escapeHtml(student.className)}</span></span></div></td>
-            <td>${escapeHtml(student.serial)}</td><td>${escapeHtml(student.academic)}</td><td>${escapeHtml(student.className)}</td>${lessonControls}
+            <td>${escapeHtml(student.serial)}</td><td class="academic-number">${escapeHtml(academicNumberForDisplay(student.academic))}</td><td>${escapeHtml(student.className)}</td>${lessonControls}
+            <td class="note-cell"><textarea class="field-control note-control" data-action="note" data-id="${escapeHtml(student.id)}" aria-label="الملاحظات" placeholder="أضف ملاحظة..." maxlength="250" ${currentRole === "staff" ? "" : "disabled"}>${escapeHtml(note)}</textarea></td>
             ${currentRole === "staff" ? `<td><div class="row-actions">
               <button class="row-action" type="button" data-action="edit" data-id="${escapeHtml(student.id)}" aria-label="تعديل ${escapeHtml(student.name)}" title="تعديل"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z"/></svg></button>
               <button class="row-action delete" type="button" data-action="delete" data-id="${escapeHtml(student.id)}" aria-label="حذف ${escapeHtml(student.name)}" title="حذف"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18m-2 0-.9 14H5.9L5 6m4 0V4h6v2m-5 4v6m4-6v6"/></svg></button>
             </div></td>` : ""}</tr>`;
         }).join("");
         if (visible.length === 0) {
-          rows.innerHTML = `<tr><td colspan="${currentRole === "staff" ? 6 : 5}"><div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div>${getRosterStudents().length ? "لا توجد نتائج تطابق البحث أو الفلاتر." : "لا يوجد طلاب في الاختيار الحالي. يمكنك تعديل خيارات الكشف أو إضافة الطلاب."}</div></td></tr>`;
+          rows.innerHTML = `<tr><td colspan="${currentRole === "staff" ? 7 : 6}"><div class="empty-state"><div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></div>${getRosterStudents().length ? "لا توجد نتائج تطابق البحث أو الفلاتر." : "لا يوجد طلاب في الاختيار الحالي. يمكنك تعديل خيارات الكشف أو إضافة الطلاب."}</div></td></tr>`;
         }
         $("#selected-lesson-heading").textContent = lessonNames[selectedLesson];
         const rosterStudents = getRosterStudents();
@@ -1502,7 +1517,7 @@
         if (student) {
           $("#full-name").value = student.name;
           $("#serial-number").value = student.serial;
-          $("#academic-number").value = student.academic;
+          $("#academic-number").value = academicNumberForDisplay(student.academic);
           const selection = classSelection(student);
           $("#student-grade").value = selection.grade;
           updateClassFields(selection);
@@ -1721,11 +1736,12 @@
         return printedStudents.map((student, index) => {
           const codes = lessonCode(student);
           const lessonCells = codes.map((code) => `<td>${code}</td>`).join("");
-          return `<tr><td>${escapeHtml(student.serial || index + 1)}</td><td>${escapeHtml(student.academic)}</td><td class="sheet-name">${escapeHtml(student.name)}</td>${lessonCells}<td></td></tr>`;
+          const note = student.attendanceByDate[selectedDate]?.notes || "";
+          return `<tr><td>${escapeHtml(student.serial || index + 1)}</td><td class="academic-number" dir="ltr">${escapeHtml(academicNumberForDisplay(student.academic))}</td><td class="sheet-name">${escapeHtml(student.name)}</td>${lessonCells}<td>${escapeHtml(note)}</td></tr>`;
         }).join("");
       }
       function sheetTableHtml(printedStudents) {
-        return `<table class="sheet-table"><colgroup><col style="width:4%"><col style="width:15%"><col style="width:31%">${Array.from({ length: 7 }, () => '<col style="width:6.1%">').join("")}<col style="width:7.3%"></colgroup>
+        return `<table class="sheet-table"><colgroup><col style="width:4%"><col style="width:15%"><col style="width:27%">${Array.from({ length: 7 }, () => '<col style="width:6%">').join("")}<col style="width:12%"></colgroup>
           <thead><tr><th>م</th><th>رقم الطالب<br>الأكاديمي</th><th>اسم الطالب</th><th>الحصة<br>الأولى</th><th>الحصة<br>الثانية</th><th>الحصة<br>الثالثة</th><th>الحصة<br>الرابعة</th><th>الحصة<br>الخامسة</th><th>الحصة<br>السادسة</th><th>الحصة<br>السابعة</th><th>الملاحظات</th></tr></thead>
           <tbody>${sheetRowsHtml(printedStudents)}</tbody></table>`;
       }
@@ -1841,6 +1857,12 @@
       $("#login-back-home").addEventListener("click", showHomeScreen);
       $("#login-form").addEventListener("submit", handleSignIn);
       $("#registration-form").addEventListener("submit", handleStudentRegistration);
+      ["#login-identifier", "#registration-academic", "#academic-number"].forEach((selector) => {
+        $(selector).addEventListener("input", (event) => {
+          const input = event.currentTarget;
+          input.value = academicNumberForDisplay(input.value);
+        });
+      });
       $("#show-registration").addEventListener("click", () => {
         $("#login-form").hidden = true;
         $("#registration-form").hidden = false;
@@ -1895,7 +1917,7 @@
           id: id || (crypto.randomUUID ? crypto.randomUUID() : `student-${Date.now()}-${Math.random().toString(16).slice(2)}`),
           name: $("#full-name").value.trim(),
           serial: $("#serial-number").value.trim(),
-          academic: $("#academic-number").value.trim(),
+          academic: academicNumberForDisplay($("#academic-number").value.trim()),
           grade: classDetails.grade,
           track: classDetails.track,
           unit: classDetails.unit,
@@ -1903,7 +1925,7 @@
           lessons: existingStudent?.lessons || Array(7).fill(""),
           attendanceByDate: existingStudent?.attendanceByDate || {}
         };
-        const duplicate = students.find((item) => item.id !== id && (item.serial === student.serial || item.academic === student.academic));
+        const duplicate = students.find((item) => item.id !== id && (item.serial === student.serial || normalizeAcademicNumber(item.academic) === normalizeAcademicNumber(student.academic)));
         if (duplicate) {
           showToast(duplicate.serial === student.serial ? "الرقم التسلسلي مستخدم لطالب آخر." : "الرقم الأكاديمي مستخدم لطالب آخر.", true);
           return;
@@ -1946,6 +1968,17 @@
       $("#search-input").addEventListener("input", render);
       $("#class-filter").addEventListener("change", render);
       $("#status-filter").addEventListener("change", render);
+      rows.addEventListener("input", (event) => {
+        if (currentRole !== "staff") return;
+        const field = event.target.closest('[data-action="note"]');
+        if (!field) return;
+        const student = students.find((item) => item.id === field.dataset.id);
+        if (!student) return;
+        const day = student.attendanceByDate[selectedDate] || { lessons: normalizeLessons({ lessons: student.lessons }) };
+        day.notes = field.value;
+        student.attendanceByDate[selectedDate] = day;
+        saveStudents();
+      });
       $("#lesson-filter").addEventListener("change", (event) => {
         selectedLesson = Number(event.target.value);
         render();
