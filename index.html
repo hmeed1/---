@@ -1751,7 +1751,7 @@
           .some((status) => status === "absent" || status === "excused")).length;
         return `<header class="sheet-header"><h1>مدرسة : الهداية الخليفية الثانوية للبنين</h1></header>
           <div class="sheet-meta"><span>الصف / الفصل: ${escapeHtml(scope)}</span><span>تاريخ التسجيل: ${escapeHtml(selectedDate)}</span><span>رمز النموذج : </span></div>
-          <div class="sheet-scope"><span>عدد الطلاب: ${printedStudents.length.toLocaleString("ar")}</span><span>الطلبة الغائبون: ${absentStudents.toLocaleString("ar")}</span></div>`;
+          <div class="sheet-scope"><span>عدد الطلاب الكلي في الكشف: ${printedStudents.length.toLocaleString("ar")}</span><span>الطلبة الغائبون: ${absentStudents.toLocaleString("ar")}</span></div>`;
       }
       function getPrintedStudents() {
         const className = $("#class-filter").value;
